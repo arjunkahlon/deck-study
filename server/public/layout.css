@@ -1,0 +1,11 @@
+.page-container {
+  margin: 0;
+}
+
+.decks-list-container {
+  padding: 1rem;
+}
+
+.hidden {
+  display: none;
+}

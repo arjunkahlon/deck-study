@@ -23,8 +23,8 @@ app.use(staticMiddleware);
 
 app.post('/api/deck', (req, res, next) => {
   const userId = 1;
-  const { deckName } = req.body;
-  if (!deckName) {
+  const { newDeckName } = req.body;
+  if (!newDeckName) {
     throw new ClientError(400, 'deck name is required');
   }
 
@@ -33,7 +33,7 @@ app.post('/api/deck', (req, res, next) => {
         values ($1, $2, $3)
         returning *
                 `;
-  const params = [deckName, userId, 0];
+  const params = [newDeckName, userId, 0];
   db.query(sql, params)
     .then(result => {
       const [deck] = result.rows;
