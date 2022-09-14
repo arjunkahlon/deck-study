@@ -40,6 +40,21 @@ app.post('/api/deck', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/decks', (req, res, next) => {
+  const userId = 1;
+  const sql = `
+          select * from "decks"
+          where "userId" = $1
+          `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const decks = result.rows;
+      return res.status(200).json(decks);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/hello', (req, res) => {
   res.json({ hello: 'world' });
 });
