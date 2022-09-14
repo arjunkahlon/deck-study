@@ -18,10 +18,6 @@ class Decks extends React.Component {
   }
 
   componentDidMount() {
-    this.updateDecks();
-  }
-
-  updateDecks() {
     fetch('/api/decks')
       .then(res => res.json())
       .then(data => {
@@ -57,10 +53,11 @@ class Decks extends React.Component {
       fetch('/api/deck', req)
         .then(res => res.json())
         .then(result => {
+          const updatedDecks = this.state.decks.concat(result);
           this.setState({
-            newDeckName: ''
+            newDeckName: '',
+            decks: updatedDecks
           });
-          this.updateDecks();
         })
         .catch(err => console.error(err));
     }
@@ -74,30 +71,31 @@ class Decks extends React.Component {
     return (
     <div className='container'>
       <div className='row'>
-        <div className='col-12 text-white bg-primary decks-header mt-2 p-4 pb-0'>
+        <div className='col-12 text-white bg-primary decks-header mt-2 p-4 pb-2'>
           <h2>Course Decks</h2>
         </div>
       </div>
       <div className='row'>
         <div className='col-12 bg-light pb-4'>
           < DeckList decks={this.state.decks} />
-            <Button variant='outline-secondary' size='lg' onClick={this.openModal}>Add A New Course Deck</Button>
+            <Button variant='outline-secondary' size='lg' onClick={this.openModal}>Create New Deck</Button>
         </div>
       </div>
       <Modal show={this.state.modalOpen} onHide={this.closeModal}>
-          <Modal.Header closeButton className='text-center'>
-            <Modal.Title>
+          <Modal.Header closeButton className='pb-1'>
+            <Modal.Title className='text-center w-100'>
               <div>
-                <h2>Add A Deck</h2>
+                <h2 className='text-primary'>Create New Deck</h2>
               </div>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.handleSubmit}>
               <div className='text-center'>
-                <label className='d-block' htmlFor='deckname'>Enter New Deck Name</label>
-                <div className='deck-input-wrapper mt-2'>
-                  <input id='deckname' type="text" value={this.state.value} onChange={this.handleDeckNameChange} />
+                <label className='d-block text-secondary' htmlFor='deckname'>Please enter the title of your new Deck.</label>
+                <div className='deck-input-wrapper input-group input-group-lg row d-flex m-auto mt-4'>
+                  <input id='deckname' className='input-group-text' type="text" autoFocus="autofocus" placeholder='e.g. Chemistry, Analysis of Algorithms, etc.'
+                  value={this.state.value} onChange={this.handleDeckNameChange} />
                 </div>
                 <div className='p-3'>
                   <Button variant='primary' type="submit" value="Submit" onClick={this.closeModal}>Add Deck</Button>
