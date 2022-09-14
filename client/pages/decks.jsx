@@ -17,8 +17,27 @@ class Decks extends React.Component {
     this.handleDeckNameChange = this.handleDeckNameChange.bind(this);
   }
 
-  openModal = () => this.setState({ modalOpen: true });
-  closeModal = () => this.setState({ modalOpen: false });
+  componentDidMount() {
+    this.updateDecks();
+  }
+
+  updateDecks() {
+    fetch('/api/decks')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          decks: data
+        });
+      });
+  }
+
+  openModal = () => this.setState({
+    modalOpen: true
+  });
+
+  closeModal = () => this.setState({
+    modalOpen: false
+  });
 
   handleSubmit(event) {
     event.preventDefault();
@@ -41,6 +60,7 @@ class Decks extends React.Component {
           this.setState({
             newDeckName: ''
           });
+          this.updateDecks();
         })
         .catch(err => console.error(err));
     }
@@ -51,7 +71,6 @@ class Decks extends React.Component {
   }
 
   render() {
-
     return (
     <div className='container'>
       <div className='row'>
@@ -61,7 +80,7 @@ class Decks extends React.Component {
       </div>
       <div className='row'>
         <div className='col-12 bg-light pb-4'>
-          < DeckList decks={this.state.decks} addDeck={this.addDeck} openModal={this.openModal} closeModal={this.closeModal}/>
+          < DeckList decks={this.state.decks} />
             <Button variant='outline-secondary' size='lg' onClick={this.openModal}>Add A New Course Deck</Button>
         </div>
       </div>
