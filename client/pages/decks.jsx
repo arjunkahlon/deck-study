@@ -66,9 +66,9 @@ class Decks extends React.Component {
         </div>
       </div>
       <Modal show={this.state.modalOpen} onHide={this.closeModal}>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton className='text-center'>
             <Modal.Title>
-              <div className='text-center'>
+              <div>
                 <h2>Add A Deck</h2>
               </div>
             </Modal.Title>

@@ -7,7 +7,7 @@ export default function DeckList(props) {
     : deckListPrompt = 'Course Decks';
 
   return (
-    <div className='container bg-light decks-list-container'>
+    <div className='container bg-light p-1'>
       <div className='row'>
         <div className='col-12'>
           <div>

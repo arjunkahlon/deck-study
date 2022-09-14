@@ -1,6 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import AppContext from './lib/app-context';
 import ParseRoute from './lib/parse-route';
 import Home from './pages/home';
 import Navbar from './components/navbar';

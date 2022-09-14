@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 require('dotenv/config');
 const pg = require('pg');
 const express = require('express');
