@@ -1,10 +1,10 @@
 import React from 'react';
-import HelloWorld from '../components/hello-world';
+import Decks from '../pages/decks';
 
 export default function Home(props) {
   return (
     <div>
-      <HelloWorld />
+      <Decks />
     </div>
   );
 }
