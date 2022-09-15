@@ -36,7 +36,7 @@ CREATE TABLE "public"."cards" (
 	"deckId" int NOT NULL,
 	"question" TEXT NOT NULL,
 	"answer" TEXT NOT NULL,
-	"difficulty" int NOT NULL,
+	"difficulty" int DEFAULT NULL,
 	"createdAt" timestamptz NOT NULL default now(),
 	CONSTRAINT "cards_pk" PRIMARY KEY ("cardId")
 ) WITH (
