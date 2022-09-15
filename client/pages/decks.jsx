@@ -95,7 +95,7 @@ class Decks extends React.Component {
                 <label className='d-block text-secondary' htmlFor='deckname'>Please enter the title of your new Deck.</label>
                 <div className='deck-input-wrapper input-group input-group-lg row d-flex m-auto mt-4'>
                   <input id='deckname' className='input-group-text' type="text" autoFocus="autofocus"
-                  placeholder='e.g. Chemistry, Analysis of Algorithms, etc.' value={this.state.value}
+                  placeholder='e.g. C++, Biology, Algorithms, etc.' value={this.state.value}
                   onChange={this.handleDeckNameChange} />
                 </div>
                 <div className='p-3'>
