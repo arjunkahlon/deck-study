@@ -38,17 +38,18 @@ class EditCards extends React.Component {
         .then(result => {
         });
     }
+    this.toggleAddMode();
   }
 
   render() {
-    const { handleAddCard } = this;
+    const { handleAddCard, toggleAddMode } = this;
     if (!this.state.addMode) {
       return (
         <Button variant='outline-secondary' size='lg' onClick={this.toggleAddMode}>Add Card</Button>
       );
     } else {
       return (
-        <AddCard deckId={this.props.deckId} handleAddCard={handleAddCard} />
+        <AddCard deckId={this.props.deckId} handleAddCard={handleAddCard} toggleAddMode={toggleAddMode}/>
       );
     }
   }

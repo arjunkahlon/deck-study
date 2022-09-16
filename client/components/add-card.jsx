@@ -61,7 +61,8 @@ class AddCard extends React.Component {
                       <div className='row'>
                         <div className='col text-end mt-5'>
                           <Button variant='secondary'
-                            className='m-2'>cancel
+                                  onClick={this.props.toggleAddMode}
+                                  className='m-2'>Cancel
                           </Button>
                           <Button variant='primary'
                                   type="submit"
