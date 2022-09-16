@@ -55,8 +55,27 @@ app.get('/api/decks', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/hello', (req, res) => {
-  res.json({ hello: 'world' });
+app.post('/api/card', (req, res, next) => {
+  const userId = 1;
+  const { deckId, question, answer } = req.body;
+  if (!deckId || !question || !answer) {
+    throw new ClientError(400, 'Insufficient Card Information');
+  }
+  const sql = `
+        insert into "cards" ("deckId", "question", "answer")
+        select $1, $2, $3
+        from "decks" as "d"
+        where "d"."deckId" = $1
+        and "d"."userId" = $4
+        returning *
+              `;
+  const params = [deckId, question, answer, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [card] = result.rows;
+      return res.status(201).json(card);
+    })
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
