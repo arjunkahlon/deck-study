@@ -36,6 +36,7 @@ class EditCards extends React.Component {
       fetch('/api/card', req)
         .then(res => res.json())
         .then(result => {
+          this.props.handleAddCard(result);
         });
     }
     this.toggleAddMode();
@@ -45,7 +46,11 @@ class EditCards extends React.Component {
     const { handleAddCard, toggleAddMode } = this;
     if (!this.state.addMode) {
       return (
-        <Button variant='outline-secondary' size='lg' onClick={this.toggleAddMode}>Add Card</Button>
+        <div className='d-grid gap-z mt-4'>
+          <Button variant='outline-secondary'
+                  size='lg'
+                  onClick={this.toggleAddMode}>Add Card</Button>
+        </div>
       );
     } else {
       return (

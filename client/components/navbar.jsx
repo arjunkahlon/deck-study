@@ -4,7 +4,7 @@ import AppContext from '../lib/app-context';
 export default class Navbar extends React.Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-light">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-light navbar-fixed-top">
         <div className="container">
           <a className="navbar-brand text-primary" href="#">
             Deck Study
