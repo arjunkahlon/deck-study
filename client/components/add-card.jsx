@@ -29,7 +29,7 @@ class AddCard extends React.Component {
   render() {
     const { handleAnswerChange, handleQuestionChange } = this;
     return (
-      <div className='container d-flex justify-content-center mt-2'>
+      <div className='container d-flex justify-content-center mt-4'>
         <div className='row'>
           <div className='col'>
             <Card>

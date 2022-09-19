@@ -78,6 +78,29 @@ app.post('/api/card', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/decks/:deckId', (req, res, next) => {
+  const deckId = Number(req.params.deckId);
+  if (!deckId) {
+    throw new ClientError(400, 'deckId not provided');
+  }
+
+  const sql = `
+        select "d".*,
+            coalesce(json_agg("c") filter (where "c"."cardId" is not NULL), '[]'::json) as "cards"
+          from "decks" as "d"
+          left join "cards" as "c" using ("deckId")
+          where "d"."deckId" = $1
+          group by "d"."deckId"
+              `;
+  const params = [deckId];
+  db.query(sql, params)
+    .then(result => {
+      const [cards] = result.rows;
+      return res.status(200).json(cards);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

@@ -1,24 +1,25 @@
 import React from 'react';
+import EmptyPrompt from './empty-prompt';
 
 function DeckList(props) {
-  let deckListPrompt = '';
-  props.decks.length === 0
-    ? deckListPrompt = 'No Course Decks'
-    : deckListPrompt = '';
 
+  if (props.decks.length === 0) {
+    return (
+      <EmptyPrompt prompt="No Decks" />
+    );
+  }
   return (
     <div className='container bg-light p-1'>
       <div className='row'>
         <div className='col-12'>
           <div>
-            <h4>{deckListPrompt}</h4>
             {props.decks.map((deck, index) => {
               return (
                 <div key={deck.deckId} className='border-bottom border-secondary p-5 pt-3'>
                   <div className='p-0'>
                     <div className='row'>
                       <div className='col-sm-8'>
-                        <h2 className='text-primary'>{deck.deckName}</h2>
+                        <h2 className='text-primary font-open-sans'>{deck.deckName}</h2>
                       </div>
                       <div className='col-sm-4 align-self-end'>
                         <div className='row'>

@@ -2,6 +2,7 @@ import React from 'react';
 import DeckList from '../components/deck-list';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Spinner from 'react-bootstrap/Spinner';
 
 class Decks extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Decks extends React.Component {
     this.state = ({
       decks: [],
       newDeckName: '',
+      isLoading: true,
       modalOpen: false
     });
     this.openModal = this.openModal.bind(this);
@@ -22,7 +24,8 @@ class Decks extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          decks: data
+          decks: data,
+          isLoading: false
         });
       });
   }
@@ -56,6 +59,7 @@ class Decks extends React.Component {
           const updatedDecks = this.state.decks.concat(result);
           this.setState({
             newDeckName: '',
+            isLoading: false,
             decks: updatedDecks
           });
         })
@@ -68,45 +72,71 @@ class Decks extends React.Component {
   }
 
   render() {
-    return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col-12 text-white bg-primary decks-header mt-2 p-4 pb-2 rounded'>
-          <h2>Course Decks</h2>
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-12 bg-light pb-4 rounded'>
-          < DeckList decks={this.state.decks} />
-            <Button variant='outline-secondary' size='lg' onClick={this.openModal}>Create New Deck</Button>
-        </div>
-      </div>
-      <Modal show={this.state.modalOpen} onHide={this.closeModal}>
-          <Modal.Header closeButton className='pb-1 bg-primary'>
-            <Modal.Title className='text-center w-100'>
-              <div>
-                <h2 className='text-primary text-light'>Create New Deck</h2>
-              </div>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form onSubmit={this.handleSubmit}>
+    if (!this.state.isLoading) {
+      return (
+        <div className='container shadow-lg'>
+          <div className='row'>
+            <div className='col-12 text-white bg-primary decks-header mt-2 p-4 pb-2 rounded'>
+              <h2 className='font-open-sans'>Course Decks</h2>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-12 bg-light pb-4 rounded'>
+              < DeckList decks={this.state.decks} />
               <div className='text-center'>
-                <label className='d-block text-secondary' htmlFor='deckname'>Please enter the title of your new Deck.</label>
-                <div className='deck-input-wrapper input-group input-group-lg row d-flex m-auto mt-4'>
-                  <input id='deckname' className='input-group-text' type="text" autoFocus="autofocus"
-                  placeholder='e.g. C++, Biology, Algorithms, etc.' value={this.state.value}
-                  onChange={this.handleDeckNameChange} />
-                </div>
-                <div className='p-3'>
-                  <Button variant='primary' type="submit" value="Submit" onClick={this.closeModal}>Add Deck</Button>
-                  </div>
+                <Button variant='outline-secondary' size='lg'
+                  onClick={this.openModal}>Create New Deck</Button>
               </div>
-            </form>
-          </Modal.Body>
-      </Modal>
-    </div>
-    );
+            </div>
+          </div>
+          <Modal show={this.state.modalOpen}
+            dialogClassName='custom-dialog'
+            onHide={this.closeModal}>
+            <Modal.Header closeButton className='pb-1 bg-primary'>
+              <Modal.Title className='text-center w-100'>
+                <div>
+                  <h2 className='text-primary text-light font-open-sans font-open-sans'>
+                    Create New Deck</h2>
+                </div>
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <form onSubmit={this.handleSubmit}>
+                <div className='text-center'>
+                  <label className='d-block text-secondary font-open-sans'
+                    htmlFor='deckname'>Please enter the title of your new Deck.</label>
+                  <div className='deck-input-wrapper input-group input-group-lg row d-flex m-auto mt-4'>
+                    <input id='deckname' className='input-group-text' type="text" autoFocus="autofocus"
+                      placeholder='e.g. C++, Biology, Algorithms, etc.' value={this.state.value}
+                      onChange={this.handleDeckNameChange} />
+                  </div>
+                  <div className='p-3'>
+                    <Button variant='primary'
+                      type="submit"
+                      value="Submit"
+                      onClick={this.closeModal}>Add Deck</Button>
+                  </div>
+                </div>
+              </form>
+            </Modal.Body>
+          </Modal>
+        </div>
+      );
+    } else {
+      return (
+        <div className='row'>
+          <div className='col'>
+            <div className='container text-center'>
+              <div className='mt-4'>
+                <Spinner animation="border"
+                  variant="primary"
+                  style={{ width: '5rem', height: '5rem' }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

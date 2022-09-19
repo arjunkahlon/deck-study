@@ -7,10 +7,20 @@ body {
   background-color: #e0e0e0;
 }
 
+.custom-dialog {
+  top: 15%;
+}
+
 /* Hover/Focus Pseudoclasses */
 
 textarea:focus {
   outline: none !important;
   border-color: #719ece;
   box-shadow: 0 0 10px #0a69ce;
+}
+
+/* Font Styling */
+
+.font-open-sans {
+  font-family: "Open Sans", sans-serif;
 }
