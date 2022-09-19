@@ -19,6 +19,7 @@ class DeckCards extends React.Component {
     this.handleAddCard = this.handleAddCard.bind(this);
     this.nextCard = this.nextCard.bind(this);
     this.previousCard = this.previousCard.bind(this);
+    this.updateCardIndex = this.updateCardIndex.bind(this);
   }
 
   nextCard() {
@@ -34,6 +35,12 @@ class DeckCards extends React.Component {
     ) % this.state.deck.cards.length;
     this.setState({
       currentCardIndex: previousIndex
+    });
+  }
+
+  updateCardIndex(index) {
+    this.setState({
+      currentCardIndex: index
     });
   }
 
@@ -63,9 +70,6 @@ class DeckCards extends React.Component {
       })
       .catch(err => {
         console.error(err);
-        // this.setState({
-        //   isLoading: false
-        // });
       });
   }
 
@@ -81,20 +85,20 @@ class DeckCards extends React.Component {
                 fill
                 onSelect={this.handleSelect}>
                 <Tab eventKey="browse" title="Browse Deck">
-                  <BrowseCards deckCards={this.state.deck}
+                  <BrowseCards deck={this.state.deck}
                                currentCardIndex = {this.state.currentCardIndex}
                                nextCard = {this.nextCard}
-                               previousCard = {this.previousCard}/>
+                               previousCard = {this.previousCard}
+                               updateCardIndex = {this.updateCardIndex}/>
                 </Tab>
                 <Tab eventKey="edit" title="Edit Cards">
                   <EditCards deckId={this.props.deckId}
-                             deckCards={this.state.deck}
+                             deck={this.state.deck}
                              updateCards = {this.updateCards}
                              handleAddCard = {this.handleAddCard}/>
                 </Tab>
                 <Tab eventKey="preview" title="Preview Cards">
-                  <PreviewCards deckCards = {this.state.deck}
-                  currentCardIndex = {this.state.currentCardIndex}/>
+                  <PreviewCards deck = {this.state.deck}/>
                 </Tab>
               </Tabs>
             </div>
