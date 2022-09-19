@@ -49,7 +49,7 @@ class BrowseCards extends React.Component {
               <i className='bi bi-chevron-left text-primary lead fs-1'
                   onClick={this.props.previousCard}></i>
             </div>
-            <div className='col text-center pt-3'>
+            <div className='col text-center pt-2'>
               <input type="text"
                      size="3"
                      placeholder={this.props.currentCardIndex + 1}
