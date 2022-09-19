@@ -15,7 +15,7 @@ class PreviewCards extends React.Component {
     return (
       cards.map((card, index) => {
         return (
-          <Card key={index} className='shadow-lg m-4 pb-3'>
+          <Card key={index} className='shadow-lg mt-2 mb-3 pb-3'>
             <Card.Title className='bg-primary rounded pt-1'>
               <h6 className='text-secondary text-light font-open-sans p-2 h6'>
                 Card {index + 1} of {cards.length}</h6>
@@ -48,7 +48,9 @@ class PreviewCards extends React.Component {
         <div className='container'>
           <div className='row'>
             <div className='col'>
-              <div>{this.renderList()}</div>
+              <div className='pt-3'>
+                {this.renderList()}
+              </div>
             </div>
           </div>
         </div>
