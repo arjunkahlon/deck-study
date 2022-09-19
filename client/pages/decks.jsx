@@ -24,7 +24,8 @@ class Decks extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          decks: data
+          decks: data,
+          isLoading: false
         });
       });
   }
@@ -71,7 +72,7 @@ class Decks extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading) {
+    if (!this.state.isLoading) {
       return (
         <div className='container shadow-lg'>
           <div className='row'>

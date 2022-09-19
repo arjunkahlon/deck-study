@@ -43,24 +43,22 @@ class PreviewCards extends React.Component {
   }
 
   render() {
-    if (this.props.deck.cards.length > 0) {
+    if (this.props.deck.cards.length === 0) {
       return (
-        <div className='container'>
-          <div className='row'>
-            <div className='col'>
-              <div className='pt-3'>
-                {this.renderList()}
-              </div>
+        <EmptyPrompt prompt="No Cards in Deck" />
+      );
+    }
+    return (
+      <div className='container'>
+        <div className='row'>
+          <div className='col'>
+            <div className='pt-3'>
+              {this.renderList()}
             </div>
           </div>
         </div>
-      );
-    } else {
-      return (
-        <EmptyPrompt prompt = "No Cards in Deck"/>
-      );
-    }
-
+      </div>
+    );
   }
 }
 
