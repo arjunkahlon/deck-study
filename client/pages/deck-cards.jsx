@@ -4,12 +4,13 @@ import Tabs from 'react-bootstrap/Tabs';
 import Spinner from 'react-bootstrap/Spinner';
 import EditCards from '../components/edit-cards';
 import BrowseCards from '../components/browse-cards';
+import PreviewCards from '../components/preview-cards';
 
 class DeckCards extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
-      deckCards: null,
+      deck: null,
       currentCardIndex: null,
       currentTab: 'browse',
       isLoading: true
@@ -21,7 +22,7 @@ class DeckCards extends React.Component {
   }
 
   nextCard() {
-    const nextIndex = (this.state.currentCardIndex + 1) % this.state.deckCards.cards.length;
+    const nextIndex = (this.state.currentCardIndex + 1) % this.state.deck.cards.length;
     this.setState({
       currentCardIndex: nextIndex
     });
@@ -29,19 +30,18 @@ class DeckCards extends React.Component {
 
   previousCard() {
     const previousIndex = (
-      (this.state.currentCardIndex - 1) + this.state.deckCards.cards.length
-    ) % this.state.deckCards.cards.length;
+      (this.state.currentCardIndex - 1) + this.state.deck.cards.length
+    ) % this.state.deck.cards.length;
     this.setState({
       currentCardIndex: previousIndex
     });
   }
 
   handleAddCard(card) {
-    const updatedCards = this.state.deckCards.cards.concat(card);
-    const updatedDeck = this.state.deckCards;
-    updatedDeck.cards = updatedCards;
+    const deckCopy = Object.assign([], this.state.deck);
+    deckCopy.cards = deckCopy.cards.concat(card);
     this.setState({
-      deckCards: updatedDeck
+      deck: deckCopy
     });
   }
 
@@ -56,16 +56,16 @@ class DeckCards extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          deckCards: data,
-          currentCardIndex: data.cards.length - 1,
+          deck: data,
+          currentCardIndex: Math.max(0, data.cards.length - 1),
           isLoading: false
         });
       })
       .catch(err => {
         console.error(err);
-        this.setState({
-          isLoading: false
-        });
+        // this.setState({
+        //   isLoading: false
+        // });
       });
   }
 
@@ -80,19 +80,22 @@ class DeckCards extends React.Component {
                 className='mb-6'
                 fill
                 onSelect={this.handleSelect}>
-                <Tab eventKey="browse" title="Browse">
-                  <BrowseCards deckCards = {this.state.deckCards}
+                <Tab eventKey="browse" title="Browse Deck">
+                  <BrowseCards deckCards={this.state.deck}
                                currentCardIndex = {this.state.currentCardIndex}
                                nextCard = {this.nextCard}
                                previousCard = {this.previousCard}/>
                 </Tab>
-                <Tab eventKey="edit" title="Edit">
+                <Tab eventKey="edit" title="Edit Cards">
                   <EditCards deckId={this.props.deckId}
-                             deckCards={this.state.deckCards}
+                             deckCards={this.state.deck}
                              updateCards = {this.updateCards}
                              handleAddCard = {this.handleAddCard}/>
                 </Tab>
-                <Tab eventKey="preview" title="Preview" />
+                <Tab eventKey="preview" title="Preview Cards">
+                  <PreviewCards deckCards = {this.state.deck}
+                  currentCardIndex = {this.state.currentCardIndex}/>
+                </Tab>
               </Tabs>
             </div>
           </div>

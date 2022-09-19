@@ -86,7 +86,7 @@ app.get('/api/decks/:deckId', (req, res, next) => {
 
   const sql = `
         select "d".*,
-                json_agg("c") as "cards"
+            coalesce(json_agg("c") filter (where "c"."cardId" is not NULL), '[]'::json) as "cards"
           from "decks" as "d"
           left join "cards" as "c" using ("deckId")
           where "d"."deckId" = $1

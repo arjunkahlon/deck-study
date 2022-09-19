@@ -37,9 +37,12 @@ class EditCards extends React.Component {
         .then(res => res.json())
         .then(result => {
           this.props.handleAddCard(result);
-        });
+        })
+        .then(
+          this.toggleAddMode
+        );
     }
-    this.toggleAddMode();
+
   }
 
   render() {
