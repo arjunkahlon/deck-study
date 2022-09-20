@@ -76,7 +76,7 @@ class Decks extends React.Component {
       return (
         <div className='container shadow-lg'>
           <div className='row'>
-            <div className='col-12 text-white bg-primary decks-header mt-2 p-4 pb-2 rounded'>
+            <div className='col-12 text-white bg-primary bg-gradient decks-header mt-2 p-4 pb-2 rounded'>
               <h2 className='font-open-sans'>Course Decks</h2>
             </div>
           </div>
@@ -92,10 +92,10 @@ class Decks extends React.Component {
           <Modal show={this.state.modalOpen}
             dialogClassName='custom-dialog'
             onHide={this.closeModal}>
-            <Modal.Header closeButton className='pb-1 bg-primary'>
+            <Modal.Header closeButton className='pb-1 bg-primary bg-gradient rounded'>
               <Modal.Title className='text-center w-100'>
                 <div>
-                  <h2 className='text-primary text-light font-open-sans font-open-sans'>
+                  <h2 className='text-light font-open-sans font-open-sans'>
                     Create New Deck</h2>
                 </div>
               </Modal.Title>
@@ -112,6 +112,7 @@ class Decks extends React.Component {
                   </div>
                   <div className='p-3'>
                     <Button variant='primary'
+                      className='bg-gradient'
                       type="submit"
                       value="Submit"
                       onClick={this.closeModal}>Add Deck</Button>

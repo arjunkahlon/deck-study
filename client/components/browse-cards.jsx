@@ -67,14 +67,13 @@ class BrowseCards extends React.Component {
         </div>
         <div className='row'>
           <div className='col-md-6 mx-auto'>
-            <Card onClick={this.flipCard}
-              className='shadow-lg mb-5 bg-white rounded'
-              style={{ height: '20rem' }}>
-              <Card.Title className='bg-primary rounded'>
+            <Card className='shadow-lg mb-5 bg-white rounded'
+                  style={{ height: '20rem' }}>
+              <Card.Title className='bg-primary bg-gradient rounded'>
                 <h5 className='text-secondary text-light font-open-sans p-2 h6'>
                   {cardHeader}</h5>
               </Card.Title>
-              <Card.Body>
+              <Card.Body onClick={this.flipCard}>
                 <div className='mt-5'>
                   <p className='text-center font-open-sans'>
                     {
@@ -89,8 +88,8 @@ class BrowseCards extends React.Component {
                   </p>
                 </div>
               </Card.Body>
-              <Card.Footer>
-                <div className='text-end font-open-sans rounded'>
+              <Card.Footer onClick={this.props.nextCard}>
+                <div className='text-end text-secondary font-open-sans rounded'>
                   <span>Card {this.props.currentCardIndex + 1} of {deck.cards.length}</span>
                 </div>
               </Card.Footer>
@@ -100,7 +99,7 @@ class BrowseCards extends React.Component {
         <div className='row'>
           <div className='col col-md-6 mx-auto text-center'>
             <Button variant='primary'
-              className='shadow-lg rounded font-open-sans m-2'
+              className='bg-gradient shadow-lg rounded font-open-sans m-2'
               onClick={this.flipCard}>Reveal {cardFlipPrompt}
             </Button>
           </div>

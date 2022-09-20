@@ -24,3 +24,9 @@ textarea:focus {
 .font-open-sans {
   font-family: "Open Sans", sans-serif;
 }
+
+.font-open-sans-bold {
+  font-family: "Open Sans", sans-serif;
+  font-weight: bolder;
+  font-style: italic;
+}

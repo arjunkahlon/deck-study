@@ -16,7 +16,7 @@ class PreviewCards extends React.Component {
       cards.map((card, index) => {
         return (
           <Card key={index} className='shadow-lg mt-2 mb-3 pb-3'>
-            <Card.Title className='bg-primary rounded pt-1'>
+            <Card.Title className='bg-primary bg-gradient rounded pt-1'>
               <h6 className='text-secondary text-light font-open-sans p-2 h6'>
                 Card {index + 1} of {cards.length}</h6>
             </Card.Title>

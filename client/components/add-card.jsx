@@ -32,7 +32,7 @@ class AddCard extends React.Component {
       <div className='container d-flex justify-content-center mt-4'>
         <div className='row'>
           <div className='col'>
-            <Card>
+            <Card className='shadow-lg'>
               <Card.Header className='bg-primary text-light text-center p-3'>
                 Add Card
               </Card.Header>

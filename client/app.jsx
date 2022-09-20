@@ -3,7 +3,6 @@ import Home from './pages/home';
 import DeckCards from './pages/deck-cards';
 import Navbar from './components/navbar';
 import PageContainer from './components/page-container';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';

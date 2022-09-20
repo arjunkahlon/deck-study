@@ -1,0 +1,11 @@
+.bg-primary {
+  background-color: rgb(116, 49, 249) !important;
+}
+
+.text-primary {
+  color: rgb(116, 49, 249) !important;
+}
+
+.btn-primary {
+  background-color: rgb(116, 49, 249);
+}
