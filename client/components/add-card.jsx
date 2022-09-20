@@ -36,24 +36,24 @@ class AddCard extends React.Component {
               <Card.Header className='bg-primary text-light text-center p-3'>
                 Add Card
               </Card.Header>
-              <Card.Body>
+              <Card.Body className='p-1'>
                 <div className='mt-3'>
                   <form onSubmit={event => this.props.handleAddCard(event, this.state.question, this.state.answer)}>
                     <div className='row'>
                       <div className='col text-center'>
-                        <label htmlFor="question" className='d-block text-secondary'>Question</label>
+                        <label htmlFor="question" className='d-block text-secondary mb-1'>Question</label>
                         <textarea id="question-input"
-                                  cols="35"
-                                  rows="5"
+                                  cols="48"
+                                  rows="8"
                                   value={this.state.value}
                                   onChange={handleQuestionChange}>
                         </textarea>
                       </div>
                       <div className='col text-center'>
-                        <label htmlFor='answer' className='d-block text-secondary'>Answer</label>
+                        <label htmlFor='answer' className='d-block text-secondary mb-1'>Answer</label>
                         <textarea id="answer-input"
-                                  cols="35"
-                                  rows="5"
+                                  cols="48"
+                                  rows="8"
                                   value={this.state.value}
                                   onChange={handleAnswerChange}>
                         </textarea>

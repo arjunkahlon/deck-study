@@ -15,7 +15,7 @@ function DeckList(props) {
           <div>
             {props.decks.map((deck, index) => {
               return (
-                <div key={deck.deckId} className='border-bottom border-secondary p-5 pt-3'>
+                <div key={deck.deckId} className='border-bottom border-secondary border-purple p-5 pt-3'>
                   <div className='p-0'>
                     <div className='row'>
                       <div className='col-sm-8'>

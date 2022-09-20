@@ -9,3 +9,17 @@
 .btn-primary {
   background-color: rgb(116, 49, 249);
 }
+
+.btn-outline-secondary {
+  color: rgb(116, 49, 249);
+  border-color: rgb(116, 49, 249);
+}
+
+.btn-outline-secondary:hover {
+  background-color: rgb(116, 49, 249) !important;
+  transition: all 700ms ease;
+}
+
+.border-purple {
+  border-color: rgb(116, 49, 249) !important;
+}

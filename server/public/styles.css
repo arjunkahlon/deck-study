@@ -15,8 +15,8 @@ body {
 
 textarea:focus {
   outline: none !important;
-  border-color: #719ece;
-  box-shadow: 0 0 10px #0a69ce;
+  border-color: rgb(116, 49, 249);
+  box-shadow: 0 0 5px 2px rgba(116, 49, 249, 0.39);
 }
 
 /* Font Styling */
