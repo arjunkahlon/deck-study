@@ -5,43 +5,20 @@ import Spinner from 'react-bootstrap/Spinner';
 import EditCards from '../components/edit-cards';
 import BrowseCards from '../components/browse-cards';
 import PreviewCards from '../components/preview-cards';
+import AppContext from '../lib/app-context';
 
 class DeckCards extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
       deck: null,
-      currentCardIndex: null,
-      currentTab: 'browse',
       isLoading: true
     });
     this.handleSelect = this.handleSelect.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
-    this.nextCard = this.nextCard.bind(this);
-    this.previousCard = this.previousCard.bind(this);
-    this.updateCardIndex = this.updateCardIndex.bind(this);
-  }
-
-  nextCard() {
-    const nextIndex = (this.state.currentCardIndex + 1) % this.state.deck.cards.length;
-    this.setState({
-      currentCardIndex: nextIndex
-    });
-  }
-
-  previousCard() {
-    const previousIndex = (
-      (this.state.currentCardIndex - 1) + this.state.deck.cards.length
-    ) % this.state.deck.cards.length;
-    this.setState({
-      currentCardIndex: previousIndex
-    });
-  }
-
-  updateCardIndex(index) {
-    this.setState({
-      currentCardIndex: index
-    });
+    // this.nextCard = this.nextCard.bind(this);
+    // this.previousCard = this.previousCard.bind(this);
+    // this.updateCardIndex = this.updateCardIndex.bind(this);
   }
 
   handleAddCard(card) {
@@ -64,7 +41,6 @@ class DeckCards extends React.Component {
       .then(data => {
         this.setState({
           deck: data,
-          currentCardIndex: Math.max(0, data.cards.length - 1),
           isLoading: false
         });
       })
@@ -74,30 +50,42 @@ class DeckCards extends React.Component {
   }
 
   render() {
+    const { route } = this.context;
+
     if (!this.state.isLoading) {
+      const deckLength = this.state.deck.cards.length;
+
       return (
         <div className='container'>
           <div className='row'>
             <div className='col'>
-              <Tabs defaultActiveKey={this.state.currentTab}
+              <Tabs defaultActiveKey={this.props.tab}
                 id='deck-card-tabs'
                 className='mb-6'
+                activeKey={this.props.tab}
+                justify={true}
+                unmountOnExit = {true}
                 fill
                 onSelect={this.handleSelect}>
-                <Tab eventKey="browse" title="Browse Deck">
+                <Tab eventKey="browse"
+                  title={<a href={`#${route.path}?deckId=${this.props.deckId}&tab=browse&cardIndex=${this.props.cardIndex}`}
+                            className='tab-anchor'>Browse</a>}>
                   <BrowseCards deck={this.state.deck}
-                               currentCardIndex = {this.state.currentCardIndex}
-                               nextCard = {this.nextCard}
-                               previousCard = {this.previousCard}
-                               updateCardIndex = {this.updateCardIndex}/>
+                               deckLength = {deckLength}
+                               route = {route}
+                               cardIndex = {this.props.cardIndex}/>
                 </Tab>
-                <Tab eventKey="edit" title="Edit Cards">
+                <Tab eventKey="edit"
+                  title={<a href={`#${route.path}?deckId=${this.props.deckId}&tab=edit&cardIndex=${this.props.cardIndex}`}
+                            className='tab-anchor'>Edit</a>}>
                   <EditCards deckId={this.props.deckId}
                              deck={this.state.deck}
                              updateCards = {this.updateCards}
                              handleAddCard = {this.handleAddCard}/>
                 </Tab>
-                <Tab eventKey="preview" title="Preview Cards">
+                <Tab eventKey="preview"
+                  title={<a href={`#${route.path}?deckId=${this.props.deckId}&tab=preview&cardIndex=${this.props.cardIndex}`}
+                            className='tab-anchor'>Preview</a>}>
                   <PreviewCards deck = {this.state.deck}/>
                 </Tab>
               </Tabs>
@@ -122,5 +110,6 @@ class DeckCards extends React.Component {
     }
   }
 }
+DeckCards.contextType = AppContext;
 
 export default DeckCards;

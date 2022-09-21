@@ -52,12 +52,19 @@ class EditCards extends React.Component {
         <div className='d-grid gap-z mt-4'>
           <Button variant='outline-secondary'
                   size='lg'
+                  className='font-open-sans'
                   onClick={this.toggleAddMode}>Add Card</Button>
         </div>
       );
     } else {
       return (
-        <AddCard deckId={this.props.deckId} handleAddCard={handleAddCard} toggleAddMode={toggleAddMode}/>
+        <div className='row'>
+          <div className='col'>
+            <AddCard deckId={this.props.deckId}
+                     handleAddCard={handleAddCard}
+                     toggleAddMode={toggleAddMode}/>
+          </div>
+        </div>
       );
     }
   }

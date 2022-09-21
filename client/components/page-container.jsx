@@ -9,8 +9,10 @@ const styles = {
 export default function PageContainer({ children }) {
   return (
     <div className="background-grey">
-      <div className="page-container" style={styles.page}>
-        {children}
+      <div className='pt-5'>
+        <div className="page-container pt-3" style={styles.page}>
+          {children}
+        </div>
       </div>
     </div>
   );

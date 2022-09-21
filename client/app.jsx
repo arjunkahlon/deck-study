@@ -26,13 +26,19 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
+
     if (route.path === '') {
       return <Home />;
     }
 
     if (route.path === 'deck-cards') {
       const deckId = route.params.get('deckId');
-      return <DeckCards deckId={deckId}/>;
+      const tab = route.params.get('tab');
+      const cardIndex = parseInt(route.params.get('cardIndex'));
+      if (!cardIndex) {
+        return <DeckCards deckId={deckId} tab={tab} cardIndex={0} />;
+      }
+      return <DeckCards deckId={deckId} tab={tab} cardIndex={cardIndex}/>;
     }
   }
 

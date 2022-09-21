@@ -25,7 +25,7 @@ function DeckList(props) {
                         <div className='row'>
                           <div className='col-sm-8 text-end'>
                             <div>
-                              <a href={`#deck-cards?deckId=${deck.deckId}`}>
+                              <a href={`#deck-cards?deckId=${deck.deckId}&tab=browse&cardIndex=${0}`}>
                                 <i className='bi bi-pencil text-primary lead fs-1 m-2'></i>
                               </a>
                               <a href="">

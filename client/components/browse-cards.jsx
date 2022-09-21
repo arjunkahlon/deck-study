@@ -8,26 +8,15 @@ class BrowseCards extends React.Component {
     super(props);
     this.state = ({
       question: true,
-      cardJump: this.props.currentCardIndex
+      cardJump: this.props.cardIndex
     });
     this.flipCard = this.flipCard.bind(this);
-    this.handleCardChange = this.handleCardChange.bind(this);
   }
 
   flipCard() {
     this.setState({
       question: !this.state.question
     });
-  }
-
-  handleCardChange(event) {
-    const newIndex = parseInt(event.target.value) - 1;
-    if (newIndex >= 0 && newIndex <= this.props.deck.cards.length - 1) {
-      this.props.updateCardIndex(newIndex);
-      this.setState({
-        cardJump: newIndex
-      });
-    }
   }
 
   render() {
@@ -50,19 +39,17 @@ class BrowseCards extends React.Component {
       <div className='container mt-4'>
         <div className='row'>
           <div className='col text-end'>
-            <i className='bi bi-chevron-left text-primary lead fs-1'
-              onClick={this.props.previousCard}></i>
+            <a href={`#${this.props.route.path}?deckId=${this.props.deck.deckId}&tab=browse&cardIndex=${((this.props.cardIndex - 1) + (this.props.deckLength)) % (this.props.deckLength)}`}>
+              <i className='bi bi-chevron-left text-light lead fs-1 bg-primary rounded' />
+            </a>
           </div>
           <div className='col text-center pt-2'>
-            <input type="text"
-              size="3"
-              placeholder={this.props.currentCardIndex + 1}
-              className='text-center'
-              onChange={this.handleCardChange}></input>
+            <h2 className='text-primary font-open-sans mb-4 bg'>{this.props.deck.deckName}</h2>
           </div>
           <div className='col'>
-            <i className='bi bi-chevron-right text-primary lead fs-1'
-              onClick={this.props.nextCard}></i>
+            <a href={`#${this.props.route.path}?deckId=${this.props.deck.deckId}&tab=browse&cardIndex=${((this.props.cardIndex + 1) % (this.props.deckLength))}`}>
+              <i className='bi bi-chevron-right text-light lead fs-1 bg-primary rounded' />
+            </a>
           </div>
         </div>
         <div className='row'>
@@ -75,22 +62,22 @@ class BrowseCards extends React.Component {
               </Card.Title>
               <Card.Body onClick={this.flipCard}>
                 <div className='mt-5'>
-                  <p className='text-center font-open-sans'>
+                  <p className='text-center font-open-sans pt-3'>
                     {
                       this.state.question
                         ? (
-                            deck.cards[this.props.currentCardIndex].question
+                            deck.cards[this.props.cardIndex].question
                           )
                         : (
-                            deck.cards[this.props.currentCardIndex].answer
+                            deck.cards[this.props.cardIndex].answer
                           )
                     }
                   </p>
                 </div>
               </Card.Body>
-              <Card.Footer onClick={this.props.nextCard}>
+              <Card.Footer>
                 <div className='text-end text-secondary font-open-sans rounded'>
-                  <span>Card {this.props.currentCardIndex + 1} of {deck.cards.length}</span>
+                  <span>Card {this.props.cardIndex + 1} of {deck.cards.length}</span>
                 </div>
               </Card.Footer>
             </Card>
