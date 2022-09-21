@@ -54,7 +54,7 @@ class AddCard extends React.Component {
                             </div>
                           </div>
                         </div>
-                        <div className='col text-center'>
+                        <div className='col-md-6 text-center'>
                           <label htmlFor='answer' className='d-flex text-secondary mb-1'>Answer:</label>
                           <div className='form-row'>
                             <div className='col-auto'>

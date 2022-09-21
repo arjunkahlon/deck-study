@@ -43,8 +43,8 @@ class BrowseCards extends React.Component {
               <i className='bi bi-chevron-left text-light lead fs-1 bg-primary rounded' />
             </a>
           </div>
-          <div className='col text-center pt-2'>
-            <h2 className='text-primary font-open-sans mb-4 bg'>{this.props.deck.deckName}</h2>
+          <div className='col-6 text-center pt-2'>
+            <h2 className='h5 text-primary font-open-sans mb-4 bg'>Card {this.props.cardIndex + 1} of {deck.cards.length}</h2>
           </div>
           <div className='col'>
             <a href={`#${this.props.route.path}?deckId=${this.props.deck.deckId}&tab=browse&cardIndex=${((this.props.cardIndex + 1) % (this.props.deckLength))}`}>
@@ -76,8 +76,12 @@ class BrowseCards extends React.Component {
                 </div>
               </Card.Body>
               <Card.Footer>
-                <div className='text-end text-secondary font-open-sans rounded'>
-                  <span>Card {this.props.cardIndex + 1} of {deck.cards.length}</span>
+                <div className='row'>
+                  <div className='col'>
+                    <div className='text-secondary font-open-sans rounded text-end'>
+                      <span>{this.props.deck.deckName}</span>
+                    </div>
+                  </div>
                 </div>
               </Card.Footer>
             </Card>

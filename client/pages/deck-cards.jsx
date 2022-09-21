@@ -61,7 +61,6 @@ class DeckCards extends React.Component {
             <div className='col'>
               <Tabs defaultActiveKey={this.props.tab}
                 id='deck-card-tabs'
-                className='mb-6'
                 activeKey={this.props.tab}
                 justify={true}
                 unmountOnExit = {true}
@@ -80,13 +79,17 @@ class DeckCards extends React.Component {
                             className='tab-anchor'>Edit</a>}>
                   <EditCards deckId={this.props.deckId}
                              deck={this.state.deck}
+                             cardIndex = {this.props.cardIndex}
+                             route = {route}
+                             deckLength={deckLength}
                              updateCards = {this.updateCards}
                              handleAddCard = {this.handleAddCard}/>
                 </Tab>
                 <Tab eventKey="preview"
                   title={<a href={`#${route.path}?deckId=${this.props.deckId}&tab=preview&cardIndex=${this.props.cardIndex}`}
                             className='tab-anchor'>Preview</a>}>
-                  <PreviewCards deck = {this.state.deck}/>
+                  <PreviewCards deck = {this.state.deck}
+                                deckLength={deckLength}/>
                 </Tab>
               </Tabs>
             </div>

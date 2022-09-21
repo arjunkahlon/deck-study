@@ -12,7 +12,7 @@ function DeckList(props) {
     <div className='container bg-light p-1'>
       <div className='row'>
         <div className='col-12'>
-          <div>
+          <div className='overflow-auto'>
             {props.decks.map((deck, index) => {
               return (
                 <div key={deck.deckId} className='border-bottom border-secondary border-purple p-5 pt-3'>
