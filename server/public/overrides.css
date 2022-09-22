@@ -1,0 +1,40 @@
+.bg-primary {
+  background-color: rgb(116, 49, 249) !important;
+}
+
+.text-primary {
+  color: rgb(116, 49, 249) !important;
+}
+
+.btn-primary {
+  background-color: rgb(116, 49, 249);
+}
+
+.btn-outline-secondary {
+  color: rgb(116, 49, 249);
+  border-color: rgb(116, 49, 249);
+}
+
+.btn-outline-secondary:hover {
+  background-color: rgb(116, 49, 249) !important;
+  transition: all 700ms ease;
+}
+
+.border-purple {
+  border-color: rgb(116, 49, 249) !important;
+}
+
+.nav-tabs .nav-link {
+  color: rgb(116, 49, 249) !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.nav-tabs .nav-link.active {
+  color: rgb(116, 49, 249) !important;
+  box-shadow: 0 0 11px 0 rgba(116, 49, 249, 0.75);
+  font-weight: 900 !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+}

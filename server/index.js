@@ -86,7 +86,7 @@ app.get('/api/decks/:deckId', (req, res, next) => {
 
   const sql = `
         select "d".*,
-            coalesce(json_agg("c") filter (where "c"."cardId" is not NULL), '[]'::json) as "cards"
+            coalesce(json_agg("c" order by "c"."createdAt") filter (where "c"."cardId" is not NULL), '[]'::json) as "cards"
           from "decks" as "d"
           left join "cards" as "c" using ("deckId")
           where "d"."deckId" = $1
@@ -97,6 +97,40 @@ app.get('/api/decks/:deckId', (req, res, next) => {
     .then(result => {
       const [cards] = result.rows;
       return res.status(200).json(cards);
+    })
+    .catch(err => next(err));
+});
+
+app.put('/api/card/:cardId', (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+
+  if (!cardId) {
+    throw new ClientError(400, 'Insufficient Card Information');
+  }
+
+  if (!Number.isInteger(cardId) || cardId < 0) {
+    throw new ClientError(400, 'gradeId must be a postive Integer');
+  }
+
+  const { question, answer } = req.body;
+
+  const sql = `
+                update "cards"
+                set "question" = $1,
+                    "answer" = $2
+                  where "cardId" = $3
+              returning *;
+              `;
+
+  const params = [question, answer, cardId];
+  db.query(sql, params)
+    .then(result => {
+      const [updatedCards] = result.rows;
+      if (!updatedCards) {
+        throw new ClientError(404, 'cannot find card with specified cardId');
+      } else {
+        return res.json(updatedCards);
+      }
     })
     .catch(err => next(err));
 });
