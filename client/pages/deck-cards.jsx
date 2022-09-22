@@ -16,14 +16,22 @@ class DeckCards extends React.Component {
     });
     this.handleSelect = this.handleSelect.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
-    // this.nextCard = this.nextCard.bind(this);
-    // this.previousCard = this.previousCard.bind(this);
-    // this.updateCardIndex = this.updateCardIndex.bind(this);
+    this.handleEditCard = this.handleEditCard.bind(this);
   }
 
   handleAddCard(card) {
-    const deckCopy = Object.assign([], this.state.deck);
+    const deckCopy = Object.assign({}, this.state.deck);
     deckCopy.cards = deckCopy.cards.concat(card);
+    this.setState({
+      deck: deckCopy
+    });
+  }
+
+  handleEditCard(card) {
+    const deckCopy = Object.assign({}, this.state.deck);
+    const cardsCopy = this.state.deck.cards.slice();
+    cardsCopy[this.props.cardIndex] = card;
+    deckCopy.cards = cardsCopy;
     this.setState({
       deck: deckCopy
     });
@@ -83,7 +91,8 @@ class DeckCards extends React.Component {
                              route = {route}
                              deckLength={deckLength}
                              updateCards = {this.updateCards}
-                             handleAddCard = {this.handleAddCard}/>
+                             handleAddCard = {this.handleAddCard}
+                             handleEditCard = {this.handleEditCard}/>
                 </Tab>
                 <Tab eventKey="preview"
                   title={<a href={`#${route.path}?deckId=${this.props.deckId}&tab=preview&cardIndex=${this.props.cardIndex}`}

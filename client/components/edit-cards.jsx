@@ -61,8 +61,7 @@ class EditCards extends React.Component {
       fetch(`/api/card/${cardId}`, req)
         .then(res => res.json())
         .then(result => {
-          this.props.deck.cards[this.props.cardIndex].question = result.question;
-          this.props.deck.cards[this.props.cardIndex].answer = result.answer;
+          this.props.handleEditCard(result);
           this.setState({
             isUpdating: false
           });
