@@ -8,9 +8,11 @@ class EditCards extends React.Component {
     super(props);
     this.state = ({
       addMode: false,
+      isUpdating: false,
       question: '',
       answer: ''
     });
+    this.handleEditCard = this.handleEditCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
     this.toggleAddMode = this.toggleAddMode.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
@@ -34,6 +36,38 @@ class EditCards extends React.Component {
     this.setState({
       addMode: !this.state.addMode
     });
+  }
+
+  handleEditCard(event) {
+    event.preventDefault();
+    this.setState({
+      isUpdating: true
+    });
+    const { question, answer } = this.state;
+    const cardId = this.props.deck.cards[this.props.cardIndex].cardId;
+    if (question && answer) {
+      const reqBody = {};
+      reqBody.question = question;
+      reqBody.answer = answer;
+
+      const req = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reqBody)
+      };
+
+      fetch(`/api/card/${cardId}`, req)
+        .then(res => res.json())
+        .then(result => {
+          this.props.deck.cards[this.props.cardIndex].question = result.question;
+          this.props.deck.cards[this.props.cardIndex].answer = result.answer;
+          this.setState({
+            isUpdating: false
+          });
+        });
+    }
   }
 
   handleAddCard(event, question, answer) {
@@ -112,7 +146,7 @@ class EditCards extends React.Component {
                   </Card.Header>
                   <Card.Body className=''>
                     <div className='mt-3'>
-                      <form >
+                      <form onSubmit={this.handleEditCard}>
                         <div className='form-group'>
                           <div className='row'>
                             <div className='col-md-6 text-center'>
@@ -147,7 +181,24 @@ class EditCards extends React.Component {
                                 <Button variant='primary'
                                   type="submit"
                                   value="Submit"
-                                  className='m-2'>Update Card
+                                  className='m-2'>
+                                    {this.state.isUpdating
+                                      ? (
+                                      <div>
+                                        <span className='spinner-border spinner-border-sm me-1'
+                                          role='status'
+                                          aria-hidden='true'>
+                                        </span>
+                                        <span className='sr-only'>
+                                          Updating
+                                        </span>
+                                      </div>
+                                        )
+                                      : (
+                                      <span className='sr-only'>
+                                        Update
+                                      </span>
+                                        )}
                                 </Button>
                               </div>
                             </div>
