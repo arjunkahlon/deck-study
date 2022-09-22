@@ -13,6 +13,21 @@ class EditCards extends React.Component {
     });
     this.handleAddCard = this.handleAddCard.bind(this);
     this.toggleAddMode = this.toggleAddMode.bind(this);
+    this.handleAnswerChange = this.handleAnswerChange.bind(this);
+    this.handleQuestionChange = this.handleQuestionChange.bind(this);
+  }
+
+  handleQuestionChange(event) {
+    this.setState({
+      question: event.target.value
+    });
+
+  }
+
+  handleAnswerChange(event) {
+    this.setState({
+      answer: event.target.value
+    });
   }
 
   toggleAddMode() {
@@ -44,6 +59,22 @@ class EditCards extends React.Component {
         .then(
           this.toggleAddMode
         );
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      question: this.props.deck.cards[this.props.cardIndex].question,
+      answer: this.props.deck.cards[this.props.cardIndex].answer
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.cardIndex !== prevProps.cardIndex) {
+      this.setState({
+        question: this.props.deck.cards[this.props.cardIndex].question,
+        answer: this.props.deck.cards[this.props.cardIndex].answer
+      });
     }
   }
 
@@ -89,8 +120,9 @@ class EditCards extends React.Component {
                               <div className='form-row'>
                                 <div className='col-auto'>
                                   <textarea id="question-input"
+                                    onChange={this.handleQuestionChange}
                                     className='add-input p-1'
-                                    value={this.props.deck.cards[this.props.cardIndex].question}>
+                                    value={this.state.question}>
                                   </textarea>
                                 </div>
                               </div>
@@ -101,7 +133,8 @@ class EditCards extends React.Component {
                                 <div className='col-auto'>
                                   <textarea id="answer-input"
                                     className='add-input p-1'
-                                    value= {this.props.deck.cards[this.props.cardIndex].answer}>
+                                    onChange={this.handleAnswerChange}
+                                    value= {this.state.answer}>
                                   </textarea>
                                 </div>
                               </div>
@@ -135,7 +168,8 @@ class EditCards extends React.Component {
           <div className='col'>
             <AddCard deckId={this.props.deckId}
                      handleAddCard={handleAddCard}
-                     toggleAddMode={toggleAddMode}/>
+                     toggleAddMode={toggleAddMode}
+                     route = {this.props.route}/>
           </div>
         </div>
       );
