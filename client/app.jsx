@@ -34,10 +34,8 @@ export default class App extends React.Component {
     if (route.path === 'deck-cards') {
       const deckId = route.params.get('deckId');
       const tab = route.params.get('tab');
-      const cardIndex = parseInt(route.params.get('cardIndex'));
-      if (!cardIndex) {
-        return <DeckCards deckId={deckId} tab={tab} cardIndex={0} />;
-      }
+      const cardIndex = parseInt(route.params.get('cardIndex') ?? '0');
+
       return <DeckCards deckId={deckId} tab={tab} cardIndex={cardIndex}/>;
     }
   }

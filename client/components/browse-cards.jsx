@@ -7,8 +7,7 @@ class BrowseCards extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
-      question: true,
-      cardJump: this.props.cardIndex
+      question: true
     });
     this.flipCard = this.flipCard.bind(this);
   }

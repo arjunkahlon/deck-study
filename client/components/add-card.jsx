@@ -34,7 +34,7 @@ class AddCard extends React.Component {
           <div className='col md-6'>
             <Card className='shadow-lg'>
               <Card.Header className='bg-primary text-light text-center font-open-sans h5 p-3'>
-                Add Card
+                New Card
               </Card.Header>
               <Card.Body className=''>
                 <div className='mt-3'>
