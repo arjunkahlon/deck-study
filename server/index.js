@@ -102,7 +102,37 @@ app.get('/api/decks/:deckId', (req, res, next) => {
 });
 
 app.put('/api/card/:cardId', (req, res, next) => {
+  const cardId = Number(req.params.cardId);
 
+  if (!cardId) {
+    throw new ClientError(400, 'Insufficient Card Information');
+  }
+
+  if (!Number.isInteger(cardId) || cardId < 0) {
+    throw new ClientError(400, 'gradeId must be a postive Integer');
+  }
+
+  const { question, answer } = req.body;
+
+  const sql = `
+                update "cards"
+                set "question" = $1,
+                    "answer" = $2
+                  where "cardId" = $3
+              returning *;
+              `;
+
+  const params = [question, answer, cardId];
+  db.query(sql, params)
+    .then(result => {
+      const [updatedCards] = result.rows;
+      if (!updatedCards) {
+        throw new ClientError(404, 'cannot find card with specified cardId');
+      } else {
+        return res.json(updatedCards);
+      }
+    })
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
