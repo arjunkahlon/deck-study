@@ -101,6 +101,10 @@ app.get('/api/decks/:deckId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.put('/api/card/:cardId', (req, res, next) => {
+
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
