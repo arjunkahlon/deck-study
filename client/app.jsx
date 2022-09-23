@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './pages/home';
 import DeckCards from './pages/deck-cards';
+import StudyCards from './pages/study-cards';
 import Navbar from './components/navbar';
 import PageContainer from './components/page-container';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -37,6 +38,11 @@ export default class App extends React.Component {
       const cardIndex = parseInt(route.params.get('cardIndex') ?? '0');
 
       return <DeckCards deckId={deckId} tab={tab} cardIndex={cardIndex}/>;
+    }
+
+    if (route.path === 'study-cards') {
+      const deckId = route.params.get('deckId');
+      return <StudyCards deckId={deckId} />;
     }
   }
 

@@ -84,9 +84,26 @@ app.get('/api/decks/:deckId', (req, res, next) => {
     throw new ClientError(400, 'deckId not provided');
   }
 
+  if (!req.query.sortBy) {
+    throw new ClientError(400, 'sortBy query not provided');
+  }
+
+  let orderBy = null;
+  let orderArrangement = null;
+
+  if (req.query.sortBy === 'createdAt') {
+    orderBy = 'createdAt';
+    orderArrangement = 'ASC';
+  } else if (req.query.sortBy === 'difficulty') {
+    orderBy = 'difficulty';
+    orderArrangement = 'DESC';
+  } else {
+    throw new ClientError(400, 'invalid sort request');
+  }
+
   const sql = `
         select "d".*,
-            coalesce(json_agg("c" order by "c"."createdAt") filter (where "c"."cardId" is not NULL), '[]'::json) as "cards"
+            coalesce(json_agg("c" order by "c"."${orderBy}" ${orderArrangement} NULLS LAST) filter (where "c"."cardId" is not NULL), '[]'::json) as "cards"
           from "decks" as "d"
           left join "cards" as "c" using ("deckId")
           where "d"."deckId" = $1
