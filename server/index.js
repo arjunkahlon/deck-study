@@ -146,11 +146,11 @@ app.put('/api/card/:cardId', (req, res, next) => {
   const params = [question, answer, cardId];
   db.query(sql, params)
     .then(result => {
-      const [updatedCards] = result.rows;
-      if (!updatedCards) {
+      const [updatedCard] = result.rows;
+      if (!updatedCard) {
         throw new ClientError(404, 'cannot find card with specified cardId');
       } else {
-        return res.json(updatedCards);
+        return res.json(updatedCard);
       }
     })
     .catch(err => next(err));
@@ -167,11 +167,31 @@ app.patch('/api/card/difficulty/:cardId', (req, res, next) => {
     throw new ClientError(400, 'gradeId must be a postive Integer');
   }
 
-  const { difficuly } = req.body;
+  const { difficulty } = req.body;
 
-  if (!difficuly) {
+  if (!difficulty) {
     throw new ClientError(400, 'difficulty required');
   }
+
+  const sql = `
+              update "cards"
+              set "difficulty" = $1
+                where "cardId" = $2
+              returning *
+              `;
+
+  const params = [difficulty, cardId];
+
+  db.query(sql, params)
+    .then(result => {
+      const [updatedCard] = result.rows;
+      if (!updatedCard) {
+        throw new ClientError(404, 'cannot find card with specified cardId');
+      } else {
+        return res.json(updatedCard);
+      }
+    })
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
