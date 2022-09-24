@@ -5,7 +5,6 @@ export default function shuffleDeck(cards) {
 
   const shuffledCardsCopy = shuffle(cardsCopy);
 
-  const groupedCards = groupBy(shuffledCardsCopy, cards.difficulty);
-
+  const groupedCards = groupBy(shuffledCardsCopy, 'difficulty');
   return groupedCards;
 }
