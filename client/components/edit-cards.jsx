@@ -36,8 +36,8 @@ class EditCards extends React.Component {
   toggleAddMode(question, answer) {
     this.setState({
       addMode: !this.state.addMode,
-      question,
-      answer
+      question: this.props.deck.cards[this.props.cardIndex].question,
+      answer: this.props.deck.cards[this.props.cardIndex].answer
     });
   }
 
@@ -93,7 +93,7 @@ class EditCards extends React.Component {
           this.props.handleAddCard(result);
         })
         .then(
-          this.toggleAddMode(question, answer)
+          this.toggleAddMode()
         );
     }
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import LoadSpinner from '../components/loading-spinner';
+import shuffleDeck from '../lib/shuffle-deck';
 
 class StudyCards extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class StudyCards extends React.Component {
     fetch(`/api/decks/${this.props.deckId}?sortBy=difficulty`)
       .then(res => res.json())
       .then(data => {
+        shuffleDeck(data.cards);
         this.setState({
           deck: data,
           isLoading: false
