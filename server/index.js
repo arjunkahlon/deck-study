@@ -131,6 +131,10 @@ app.put('/api/card/:cardId', (req, res, next) => {
 
   const { question, answer } = req.body;
 
+  if (!question || !answer) {
+    throw new ClientError(400, 'question and answer required');
+  }
+
   const sql = `
                 update "cards"
                 set "question" = $1,
@@ -150,6 +154,24 @@ app.put('/api/card/:cardId', (req, res, next) => {
       }
     })
     .catch(err => next(err));
+});
+
+app.patch('/api/card/difficulty/:cardId', (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+
+  if (!cardId) {
+    throw new ClientError(400, 'Insufficient Card Information');
+  }
+
+  if (!Number.isInteger(cardId) || cardId < 0) {
+    throw new ClientError(400, 'gradeId must be a postive Integer');
+  }
+
+  const { difficuly } = req.body;
+
+  if (!difficuly) {
+    throw new ClientError(400, 'difficulty required');
+  }
 });
 
 app.use(errorMiddleware);
