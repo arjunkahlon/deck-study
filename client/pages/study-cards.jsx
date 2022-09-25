@@ -7,7 +7,9 @@ class StudyCards extends React.Component {
     super(props);
     this.state = ({
       deck: null,
-      isLoading: true
+      cards: null,
+      isLoading: true,
+      index: 0
     });
   }
 
@@ -15,9 +17,10 @@ class StudyCards extends React.Component {
     fetch(`/api/decks/${this.props.deckId}?sortBy=difficulty`)
       .then(res => res.json())
       .then(data => {
-        shuffleDeck(data.cards);
+        const shuffledCards = shuffleDeck(data.cards);
         this.setState({
           deck: data,
+          cards: shuffledCards,
           isLoading: false
         });
       })
@@ -37,7 +40,7 @@ class StudyCards extends React.Component {
       <div className='container'>
         <div className='row'>
           <div className='col'>
-
+            <h2>{this.state.cards[3].question}</h2>
           </div>
         </div>
       </div>
