@@ -2,6 +2,14 @@
   background-color: rgb(116, 49, 249) !important;
 }
 
+.bg-blue {
+  background-color: rgba(0, 0, 255, 0.85) !important;
+}
+
+.bg-orange {
+  background-color: orange !important;
+}
+
 .text-primary {
   color: rgb(116, 49, 249) !important;
 }
