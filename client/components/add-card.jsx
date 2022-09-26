@@ -46,8 +46,7 @@ class AddCard extends React.Component {
                           <div className='form-row'>
                             <div className='col-auto'>
                               <textarea id="question-input"
-                                        className='add-input p-0'
-
+                                        className='add-input p-2'
                                         value={this.state.value}
                                         onChange={handleQuestionChange}>
                               </textarea>
@@ -59,7 +58,7 @@ class AddCard extends React.Component {
                           <div className='form-row'>
                             <div className='col-auto'>
                               <textarea id="answer-input"
-                                        className='add-input p-0'
+                                        className='add-input p-1'
                                         cols="40"
                                         rows="8"
                                         value={this.state.value}

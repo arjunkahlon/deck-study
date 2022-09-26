@@ -11,10 +11,11 @@ class StudyCards extends React.Component {
       deck: null,
       cards: null,
       card: null,
+      studiedCards: [],
       cardDrawn: false,
       cardRevealed: false,
       isLoading: true,
-      index: 0
+      index: null
     });
 
     this.difficultyTheme = ['bg-blue', 'bg-success', 'bg-warning', 'bg-orange', 'bg-danger'];
@@ -29,19 +30,27 @@ class StudyCards extends React.Component {
     const currentIndex = this.state.index;
     let newIndex = null;
 
-    if (currentIndex === cardsCopy.length - 1) {
+    if (currentIndex === cardsCopy.length) {
       newIndex = 0;
+      const studiedCardsCopy = [...this.state.studiedCards];
+      const shuffledCards = shuffleDeck(studiedCardsCopy);
+
+      this.setState({
+        cards: shuffledCards,
+        studiedCardsCopy: null,
+        index: newIndex
+      });
     } else {
       newIndex = currentIndex + 1;
+      const newCard = cardsCopy[currentIndex];
+
+      this.setState({
+        card: newCard,
+        cardDrawn: true,
+        index: newIndex
+      });
     }
 
-    const newCard = cardsCopy[currentIndex];
-
-    this.setState({
-      card: newCard,
-      cardDrawn: true,
-      index: newIndex
-    });
   }
 
   revealCard(e) {
@@ -71,10 +80,13 @@ class StudyCards extends React.Component {
       fetch(`/api/card/difficulty/${cardId}`, req)
         .then(res => res.json())
         .then(result => {
+          let studiedCardsCopy = [...this.state.studiedCards];
+          studiedCardsCopy = studiedCardsCopy.concat(result);
           this.setState({
             cardDrawn: false,
             cardRevealed: false,
-            isLoading: false
+            isLoading: false,
+            studiedCards: studiedCardsCopy
           });
         });
     }
@@ -88,6 +100,7 @@ class StudyCards extends React.Component {
         this.setState({
           deck: data,
           cards: shuffledCards,
+          index: 0,
           isLoading: false
         });
       })
@@ -107,14 +120,27 @@ class StudyCards extends React.Component {
       return this.drawCard();
     }
 
+    const difficultyButtons = this.difficultyTheme.map((difficultyColor, index) => {
+      return (
+        <Button key={index} className={`${difficultyColor} rounded-circle m-2 shadow-lg border-0`}
+                size='lg'
+                onClick={e => this.handleRateCard(e, index + 1)}>{index + 1}</Button>
+      );
+    });
+
     return (
       <div className='container mt-4'>
         <div className='row justify-content-center'>
           <div className='col-lg-6'>
-            <Card style={{ height: '25rem' }}>
-              <Card.Header className={`${this.difficultyTheme[this.state.card.difficulty - 1]}`} />
+            <Card className='shadow-lg mb-5 bg-white rounded' style={{ height: '25rem' }}>
+              <Card.Header ref={this.selectorRef} className={`${this.difficultyTheme[this.state.card.difficulty - 1]} pb-0 pe-3 rounded`}>
+                <div className='row justify-content-end'>
+                  <div className='col text-end'>
+                    <h5 className='font-open-sans text-white'>{this.state.deck.deckName}</h5>
+                  </div>
+                </div>
+              </Card.Header>
               <Card.Body>
-
                 {
                   this.state.cardRevealed
                     ? (
@@ -126,7 +152,12 @@ class StudyCards extends React.Component {
                           </div>
                           <div className='row'>
                             <div className='col text-center'>
-                              <p className='text-secondary mt-3'>{this.state.card.question}</p>
+                              <p className='font-open-sanstext-secondary mt-3'>{this.state.card.question}</p>
+                            </div>
+                          </div>
+                          <div className='row'>
+                            <div className='col border-bottom border-secondary pt-1'>
+
                             </div>
                           </div>
                           <div className='row'>
@@ -136,7 +167,7 @@ class StudyCards extends React.Component {
                           </div>
                           <div className='row'>
                             <div className='col text-center'>
-                              <p className='font-weight-bold'>{this.state.card.answer}</p>
+                              <p className='font-open-sans font-weight-bold'>{this.state.card.answer}</p>
                             </div>
                           </div>
                         </div>
@@ -150,7 +181,7 @@ class StudyCards extends React.Component {
                           </div>
                           <div className='text-center mt-5'>
                             <div className='pt-5'>
-                              <p>{this.state.card.question}</p>
+                              <p className='font-open-sans'>{this.state.card.question}</p>
                             </div>
                           </div>
                         </div>
@@ -165,33 +196,32 @@ class StudyCards extends React.Component {
            {
               this.state.cardRevealed
                 ? (
-                    <div className='text-center mt-2'>
-                      <Button className="bg-blue btn-circle m-2"
-                               onClick={e => this.handleRateCard(e, 1)}>1
-                      </Button>
-                       <Button className='bg-success m-2'
-                                onClick={e => this.handleRateCard(e, 2)}>2
-                       </Button>
-                      <Button className='bg-warning m-2'
-                              onClick={e => this.handleRateCard(e, 3)}>3
-                      </Button>
-                      <Button className='bg-orange m-2'
-                              onClick={e => this.handleRateCard(e, 4)}>4
-                      </Button>
-                      <Button className='bg-danger m-2'
-                              onClick={e => this.handleRateCard(e, 5)}>5
-                      </Button>
+                    <div>
+                      <div className='row'>
+                        <div className='col text-center'>
+                          <p className='text-secondary'>How difficult did you find this question?</p>
+                        </div>
+                      </div>
+                      <div className='row justify-content-center'>
+                        <div className='col-lg-auto mt-2 text-center'>
+                          {difficultyButtons}
+                        </div>
+                      </div>
                     </div>
                   )
                 : (
-                    <div className='text-center mt-2'>
-                      <Button onClick={e => this.revealCard(e)}>
-                        Reveal Answer
-                      </Button>
+                    <div className='row justify-content-center'>
+                    <div className='col-md-4 text-center mt-2 d-grid gap-2'>
+                        <Button variant='primary'
+                                size='lg'
+                                className={`${this.difficultyTheme[this.state.card.difficulty - 1]} shadow-lg border-0 font-open-sans`}
+                                onClick={e => this.revealCard(e)}>
+                          Reveal Answer
+                        </Button>
+                      </div>
                     </div>
                   )
             }
-
           </div>
         </div>
       </div>
