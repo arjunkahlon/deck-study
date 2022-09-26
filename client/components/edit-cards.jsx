@@ -91,7 +91,7 @@ class EditCards extends React.Component {
           this.props.handleAddCard(result);
         })
         .then(
-          this.toggleAddMode()
+          this.toggleAddMode
         );
     }
   }

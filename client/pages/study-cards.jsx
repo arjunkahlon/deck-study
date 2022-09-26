@@ -14,7 +14,6 @@ class StudyCards extends React.Component {
       studiedCards: [],
       cardDrawn: false,
       cardRevealed: false,
-      isLoading: true,
       index: null
     });
 
@@ -37,7 +36,7 @@ class StudyCards extends React.Component {
 
       this.setState({
         cards: shuffledCards,
-        studiedCardsCopy: null,
+        studiedCards: [],
         index: newIndex
       });
     } else {
@@ -61,7 +60,7 @@ class StudyCards extends React.Component {
 
   handleRateCard(e, difficulty) {
     this.setState({
-      isLoading: true
+      cardDrawn: false
     });
     const cardId = this.state.card.cardId;
 
@@ -80,13 +79,11 @@ class StudyCards extends React.Component {
       fetch(`/api/card/difficulty/${cardId}`, req)
         .then(res => res.json())
         .then(result => {
-          let studiedCardsCopy = [...this.state.studiedCards];
-          studiedCardsCopy = studiedCardsCopy.concat(result);
+          const studiedCardsCopy = [...this.state.studiedCards, result];
           this.setState({
+            studiedCards: studiedCardsCopy,
             cardDrawn: false,
-            cardRevealed: false,
-            isLoading: false,
-            studiedCards: studiedCardsCopy
+            cardRevealed: false
           });
         });
     }
@@ -101,7 +98,7 @@ class StudyCards extends React.Component {
           deck: data,
           cards: shuffledCards,
           index: 0,
-          isLoading: false
+          cardDrawn: true
         });
       })
       .catch(err => {
@@ -110,23 +107,11 @@ class StudyCards extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading) {
+    if (!this.state.cardDrawn) {
       return (
         <LoadSpinner />
       );
     }
-
-    if (!this.state.cardDrawn) {
-      return this.drawCard();
-    }
-
-    const difficultyButtons = this.difficultyTheme.map((difficultyColor, index) => {
-      return (
-        <Button key={index} className={`${difficultyColor} rounded-circle m-2 shadow-lg border-0`}
-                size='lg'
-                onClick={e => this.handleRateCard(e, index + 1)}>{index + 1}</Button>
-      );
-    });
 
     return (
       <div className='container mt-4'>
@@ -204,7 +189,15 @@ class StudyCards extends React.Component {
                       </div>
                       <div className='row justify-content-center'>
                         <div className='col-lg-auto mt-2 text-center'>
-                          {difficultyButtons}
+                          {
+                            this.difficultyTheme.map((difficultyColor, index) => {
+                              return (
+                                <Button key={index} className={`${difficultyColor} rounded-circle m-2 shadow-lg border-0`}
+                                  size='lg'
+                                  onClick={e => this.handleRateCard(e, index + 1)}>{index + 1}</Button>
+                              );
+                            })
+                          }
                         </div>
                       </div>
                     </div>

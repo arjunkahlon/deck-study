@@ -122,7 +122,7 @@ app.put('/api/card/:cardId', (req, res, next) => {
   const cardId = Number(req.params.cardId);
 
   if (!cardId) {
-    throw new ClientError(400, 'Insufficient Card Information');
+    throw new ClientError(400, 'cardId is required');
   }
 
   if (!Number.isInteger(cardId) || cardId < 0) {
@@ -160,7 +160,7 @@ app.patch('/api/card/difficulty/:cardId', (req, res, next) => {
   const cardId = Number(req.params.cardId);
 
   if (!cardId) {
-    throw new ClientError(400, 'Insufficient Card Information');
+    throw new ClientError(400, 'cardId is required');
   }
 
   if (!Number.isInteger(cardId) || cardId < 0) {
