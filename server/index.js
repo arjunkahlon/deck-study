@@ -84,9 +84,26 @@ app.get('/api/decks/:deckId', (req, res, next) => {
     throw new ClientError(400, 'deckId not provided');
   }
 
+  if (!req.query.sortBy) {
+    throw new ClientError(400, 'sortBy query not provided');
+  }
+
+  let orderBy = null;
+  let orderArrangement = null;
+
+  if (req.query.sortBy === 'createdAt') {
+    orderBy = 'createdAt';
+    orderArrangement = 'ASC';
+  } else if (req.query.sortBy === 'difficulty') {
+    orderBy = 'difficulty';
+    orderArrangement = 'DESC';
+  } else {
+    throw new ClientError(400, 'invalid sort request');
+  }
+
   const sql = `
         select "d".*,
-            coalesce(json_agg("c" order by "c"."createdAt") filter (where "c"."cardId" is not NULL), '[]'::json) as "cards"
+            coalesce(json_agg("c" order by "c"."${orderBy}" ${orderArrangement} NULLS LAST) filter (where "c"."cardId" is not NULL), '[]'::json) as "cards"
           from "decks" as "d"
           left join "cards" as "c" using ("deckId")
           where "d"."deckId" = $1
@@ -105,7 +122,7 @@ app.put('/api/card/:cardId', (req, res, next) => {
   const cardId = Number(req.params.cardId);
 
   if (!cardId) {
-    throw new ClientError(400, 'Insufficient Card Information');
+    throw new ClientError(400, 'cardId is required');
   }
 
   if (!Number.isInteger(cardId) || cardId < 0) {
@@ -113,6 +130,10 @@ app.put('/api/card/:cardId', (req, res, next) => {
   }
 
   const { question, answer } = req.body;
+
+  if (!question || !answer) {
+    throw new ClientError(400, 'question and answer required');
+  }
 
   const sql = `
                 update "cards"
@@ -125,11 +146,49 @@ app.put('/api/card/:cardId', (req, res, next) => {
   const params = [question, answer, cardId];
   db.query(sql, params)
     .then(result => {
-      const [updatedCards] = result.rows;
-      if (!updatedCards) {
+      const [updatedCard] = result.rows;
+      if (!updatedCard) {
         throw new ClientError(404, 'cannot find card with specified cardId');
       } else {
-        return res.json(updatedCards);
+        return res.json(updatedCard);
+      }
+    })
+    .catch(err => next(err));
+});
+
+app.patch('/api/card/difficulty/:cardId', (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+
+  if (!cardId) {
+    throw new ClientError(400, 'cardId is required');
+  }
+
+  if (!Number.isInteger(cardId) || cardId < 0) {
+    throw new ClientError(400, 'gradeId must be a postive Integer');
+  }
+
+  const { difficulty } = req.body;
+
+  if (!difficulty) {
+    throw new ClientError(400, 'difficulty required');
+  }
+
+  const sql = `
+              update "cards"
+              set "difficulty" = $1
+                where "cardId" = $2
+              returning *
+              `;
+
+  const params = [difficulty, cardId];
+
+  db.query(sql, params)
+    .then(result => {
+      const [updatedCard] = result.rows;
+      if (!updatedCard) {
+        throw new ClientError(404, 'cannot find card with specified cardId');
+      } else {
+        return res.json(updatedCard);
       }
     })
     .catch(err => next(err));

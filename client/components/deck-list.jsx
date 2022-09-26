@@ -30,7 +30,7 @@ function DeckList(props) {
                               <a href={`#deck-cards?deckId=${deck.deckId}&tab=edit&cardIndex=${0}`}>
                                 <i className='bi bi-pencil text-primary lead fs-1 m-2'></i>
                               </a>
-                              <a href="">
+                              <a href={`#study-cards?deckId=${deck.deckId}`}>
                                 <i className='bi bi-book text-primary lead fs-1 m-2'></i>
                               </a>
                             </div>
