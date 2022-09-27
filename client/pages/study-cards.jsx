@@ -12,6 +12,7 @@ class StudyCards extends React.Component {
       cards: null,
       card: null,
       studiedCards: [],
+      isLoading: true,
       cardDrawn: false,
       cardRevealed: false,
       index: null
@@ -60,7 +61,7 @@ class StudyCards extends React.Component {
 
   handleRateCard(e, difficulty) {
     this.setState({
-      cardDrawn: false
+      isLoading: true
     });
     const cardId = this.state.card.cardId;
 
@@ -82,8 +83,9 @@ class StudyCards extends React.Component {
           const studiedCardsCopy = [...this.state.studiedCards, result];
           this.setState({
             studiedCards: studiedCardsCopy,
-            cardDrawn: false,
-            cardRevealed: false
+            isLoading: false,
+            cardRevealed: false,
+            cardDrawn: false
           });
         });
     }
@@ -98,7 +100,7 @@ class StudyCards extends React.Component {
           deck: data,
           cards: shuffledCards,
           index: 0,
-          cardDrawn: true
+          isLoading: false
         });
       })
       .catch(err => {
@@ -107,10 +109,14 @@ class StudyCards extends React.Component {
   }
 
   render() {
-    if (!this.state.cardDrawn) {
+    if (this.state.isLoading) {
       return (
         <LoadSpinner />
       );
+    }
+
+    if (!this.state.cardDrawn) {
+      return this.drawCard();
     }
 
     return (
