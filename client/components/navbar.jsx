@@ -10,6 +10,9 @@ export default class Navbar extends React.Component {
             Deck Study
           </a>
         </div>
+        <div>
+          <button className='btn btn-light text-primary border border-primary me-4 font-open-sans'>Sign Out</button>
+        </div>
       </nav>
     );
   }

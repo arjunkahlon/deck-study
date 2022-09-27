@@ -16,6 +16,10 @@ a:link {
   background-color: #e0e0e0;
 }
 
+.study-header {
+  background-color: rgb(178, 178, 178);
+}
+
 .custom-dialog {
   top: 15%;
 }
@@ -31,6 +35,22 @@ textarea:focus {
   outline: none !important;
   border-color: rgb(116, 49, 249);
   box-shadow: 0 0 5px 2px rgba(116, 49, 249, 0.39);
+}
+
+.rtng-circle {
+  transition: transform 0.5s ease;
+}
+
+.rtng-circle:hover {
+  transform: scale(1.2);
+}
+
+.rtng-button {
+  transition: transform 0.5s ease;
+}
+
+.rtng-button:hover {
+  transform: scale(1.1);
 }
 
 /* Font Styling */
