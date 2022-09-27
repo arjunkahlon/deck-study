@@ -3,6 +3,7 @@ import LoadSpinner from '../components/loading-spinner';
 import shuffleDeck from '../lib/shuffle-deck';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import EmptyPrompt from '../components/empty-prompt';
 
 class StudyCards extends React.Component {
   constructor(props) {
@@ -100,8 +101,10 @@ class StudyCards extends React.Component {
       );
     }
 
-    if (this.state.cards === null) {
-      return;
+    if (this.state.cards.length === 0) {
+      return (
+        <EmptyPrompt prompt="No Cards in Deck" />
+      );
     }
 
     return (
