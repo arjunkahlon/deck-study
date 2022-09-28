@@ -1,8 +1,9 @@
 import React from 'react';
 import Home from './pages/home';
+import AuthPage from './pages/auth';
 import DeckCards from './pages/deck-cards';
 import StudyCards from './pages/study-cards';
-import Navbar from './components/navbar';
+import Navigation from './components/navbar';
 import PageContainer from './components/page-container';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import parseRoute from './lib/parse-route';
@@ -26,10 +27,14 @@ export default class App extends React.Component {
   }
 
   renderPage() {
-    const { route } = this.state;
+    const { user, route } = this.state;
 
     if (route.path === '') {
-      return <Home />;
+      return <Home user={user}/>;
+    }
+
+    if (route.path === 'sign-in' || route.path === 'sign-up') {
+      return <AuthPage />;
     }
 
     if (route.path === 'deck-cards') {
@@ -47,12 +52,12 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { route } = this.state;
-    const contextValue = { route };
+    const { user, route } = this.state;
+    const contextValue = { user, route };
     return (
       <AppContext.Provider value={contextValue}>
         <>
-          <Navbar />
+          <Navigation />
           <PageContainer>
             {this.renderPage()}
           </PageContainer>
