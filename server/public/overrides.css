@@ -28,7 +28,14 @@
   transition: all 700ms ease;
 }
 
-.border-purple {
+#sign-out-button:hover,
+#sign-in-button:hover {
+  color: white !important;
+  background-color: rgb(116, 49, 249) !important;
+  transition: all 700ms ease;
+}
+
+.border-primary {
   border-color: rgb(116, 49, 249) !important;
 }
 

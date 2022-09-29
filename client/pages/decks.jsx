@@ -74,7 +74,7 @@ class Decks extends React.Component {
   render() {
     if (!this.state.isLoading) {
       return (
-        <div className='container shadow-lg'>
+        <div className='container shadow-lg mb-3'>
           <div className='row'>
             <div className='col-12 text-white bg-primary bg-gradient decks-header mt-2 p-4 pb-2 rounded'>
               <div className='ps-2'>

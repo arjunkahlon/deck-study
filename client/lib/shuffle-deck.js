@@ -10,7 +10,6 @@ export default function shuffleDeck(cards) {
 
   reversedCardKeys.forEach(key => {
     combinedCards.push(...groupedCards[key]);
-    // combinedCards = combinedCards.concat(groupedCards[key]);
   });
 
   return combinedCards;

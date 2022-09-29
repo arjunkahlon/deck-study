@@ -89,7 +89,7 @@ class BrowseCards extends React.Component {
         <div className='row'>
           <div className='col col-md-6 mx-auto text-center'>
             <Button variant='primary'
-              className='bg-gradient shadow-lg rounded font-open-sans m-2'
+              className='bg-gradient border-primary shadow-lg rounded font-open-sans m-2'
               onClick={this.flipCard}>Reveal {cardFlipPrompt}
             </Button>
           </div>
