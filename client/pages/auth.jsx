@@ -11,29 +11,43 @@ class AuthPage extends React.Component {
 
     if (user) return <Redirect to="" />;
 
+    const userHeader = route.path === 'sign-in'
+      ? 'Welcome Back!'
+      : 'Welcome New User!';
+
     const userPrompt = route.path === 'sign-in'
-      ? 'Log In'
+      ? 'Sign In'
       : 'Create an Account';
 
     return (
       <div className='container'>
         <div className='row'>
           <div className='col'>
-            <header className='text-center'>
-              <h2 className='mb-2 bg-primary text-light'>
-                <i className='fas fa-bolt me-2s' />
-                Welcome to Deck Study
+            <header className='text-center bg-primary bg-gradient p-3 rounded'>
+              <h2 className='text-light font-open-sans'>
+                {userHeader}
               </h2>
-              <p className='font-open-sans text-muted mb-4'>{ userPrompt }</p>
             </header>
           </div>
-            <AuthForm
-              key={route.path}
-              action={route.path}/>
+        </div>
+        <div className='container bg-light p-3 rounded'>
+          <div className='row'>
+            <div className='col text-center'>
+              <p className='font-open-sans text-primary h5 mb-4'>
+                {userPrompt}
+              </p>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col mb-5'>
+              <AuthForm
+                key={route.path}
+                action={route.path}/>
+            </div>
+          </div>
         </div>
       </div>
     );
-
   }
 }
 

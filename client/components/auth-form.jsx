@@ -38,21 +38,25 @@ export default class AuthForm extends React.Component {
   render() {
     const { action } = this.props;
     const { handleChange, handleSubmit } = this;
+
     const alternateActionHref = action === 'sign-up'
       ? '#sign-in'
       : '#sign-up';
+
     const alternatActionText = action === 'sign-up'
-      ? 'Sign in instead'
-      : 'Register now';
+      ? 'Already have an account?'
+      : 'Create an account?';
+
     const submitButtonText = action === 'sign-up'
-      ? 'Register'
-      : 'Log In';
+      ? 'Sign Up'
+      : 'Sign In';
+
     return (
       <div className='container'>
         <div className='row justify-content-center'>
           <div className='col-lg-4'>
             <form className="w-100" onSubmit={handleSubmit}>
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="username" className="form-label">
                   Username
                 </label>
@@ -65,7 +69,7 @@ export default class AuthForm extends React.Component {
                   onChange={handleChange}
                   className="form-control bg-light" />
               </div>
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="password" className="form-label">
                   Password
                 </label>
@@ -83,7 +87,7 @@ export default class AuthForm extends React.Component {
                     {alternatActionText}
                   </a>
                 </small>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary bg-gradient">
                   {submitButtonText}
                 </button>
               </div>
