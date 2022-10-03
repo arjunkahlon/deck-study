@@ -41,6 +41,28 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/auth/sign-in', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
+  const sql = `
+        select "userId",
+               "hashedPassword"
+            fron "users"
+          where "username" = $1
+              `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+
+      if (!user) {
+        throw new ClientError(401, 'invalid login');
+      }
+    });
+});
+
 app.use(staticMiddleware);
 
 app.post('/api/deck', (req, res, next) => {
