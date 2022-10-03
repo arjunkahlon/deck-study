@@ -1,6 +1,7 @@
 require('dotenv/config');
 const pg = require('pg');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const argon2 = require('argon2');
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
@@ -49,18 +50,31 @@ app.post('/api/auth/sign-in', (req, res, next) => {
   const sql = `
         select "userId",
                "hashedPassword"
-            fron "users"
+            from "users"
           where "username" = $1
               `;
+
   const params = [username];
   db.query(sql, params)
     .then(result => {
       const [user] = result.rows;
-
       if (!user) {
         throw new ClientError(401, 'invalid login');
       }
-    });
+
+      const { userId, hashedPassword } = user;
+      return argon2
+        .verify(hashedPassword, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            throw new ClientError(401, 'invalid login');
+          }
+          const payload = { userId, username };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.json({ token, user: payload });
+        });
+    })
+    .catch(err => next(err));
 });
 
 app.use(staticMiddleware);
