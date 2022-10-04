@@ -17,7 +17,9 @@ export default class Navigation extends React.Component {
         <Nav className='justify-content-end flex-grow-1'>
           <div>
             {user !== null &&
-              <Button id='sign-out-button' className='bg-light text-primary border border-primary me-2'>
+              <Button id='sign-out-button'
+                      className='bg-light text-primary border border-primary me-2'
+                      onClick={this.props.onSignOut}>
                 Sign Out
               </Button>
             }
