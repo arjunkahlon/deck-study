@@ -42,6 +42,7 @@ export default class App extends React.Component {
 
   handleSignOut() {
     window.localStorage.removeItem('deck-study-jwt');
+    window.location.hash = '';
     this.setState({ user: null, token: null });
   }
 
