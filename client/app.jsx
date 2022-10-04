@@ -20,6 +20,7 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash)
     };
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +38,12 @@ export default class App extends React.Component {
     const { user, token } = result;
     window.localStorage.setItem('deck-study-jwt', token);
     this.setState({ user, token });
+  }
+
+  handleSignOut() {
+    window.localStorage.removeItem('deck-study-jwt');
+    window.location.hash = '';
+    this.setState({ user: null, token: null });
   }
 
   renderPage() {
@@ -72,7 +79,7 @@ export default class App extends React.Component {
     return (
       <AppContext.Provider value={contextValue}>
         <>
-          <Navigation />
+          <Navigation onSignOut={this.handleSignOut}/>
           <PageContainer>
             {this.renderPage()}
           </PageContainer>
