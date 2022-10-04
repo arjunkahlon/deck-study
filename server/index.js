@@ -3,8 +3,9 @@ const pg = require('pg');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const argon2 = require('argon2');
-const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
+const authorizationMiddleware = require('./authorization-middleware');
+const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 
 const db = new pg.Pool({
@@ -15,6 +16,7 @@ const db = new pg.Pool({
 });
 
 const app = express();
+app.use(staticMiddleware);
 
 const jsonMiddleWare = express.json();
 app.use(jsonMiddleWare);
@@ -77,10 +79,10 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.use(staticMiddleware);
+app.use(authorizationMiddleware);
 
 app.post('/api/deck', (req, res, next) => {
-  const userId = 1;
+  const { userId } = req.user;
   const { newDeckName } = req.body;
   if (!newDeckName) {
     throw new ClientError(400, 'deck name is required');
@@ -101,7 +103,7 @@ app.post('/api/deck', (req, res, next) => {
 });
 
 app.get('/api/decks', (req, res, next) => {
-  const userId = 1;
+  const { userId } = req.user;
   const sql = `
           select * from "decks"
           where "userId" = $1
@@ -116,7 +118,7 @@ app.get('/api/decks', (req, res, next) => {
 });
 
 app.post('/api/card', (req, res, next) => {
-  const userId = 1;
+  const { userId } = req.user;
   const { deckId, question, answer } = req.body;
   if (!deckId || !question || !answer) {
     throw new ClientError(400, 'Insufficient Card Information');
@@ -180,7 +182,6 @@ app.get('/api/decks/:deckId', (req, res, next) => {
 
 app.put('/api/card/:cardId', (req, res, next) => {
   const cardId = Number(req.params.cardId);
-
   if (!cardId) {
     throw new ClientError(400, 'cardId is required');
   }
