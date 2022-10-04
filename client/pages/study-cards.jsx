@@ -40,7 +40,8 @@ class StudyCards extends React.Component {
       const req = {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-Access-Token': `${this.props.token}`
         },
         body: JSON.stringify(reqBody)
       };
@@ -78,7 +79,15 @@ class StudyCards extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/decks/${this.props.deckId}?sortBy=difficulty`)
+    const req = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': `${this.props.token}`
+      }
+    };
+
+    fetch(`/api/decks/${this.props.deckId}?sortBy=difficulty`, req)
       .then(res => res.json())
       .then(data => {
         const shuffledCards = shuffleDeck(data.cards);

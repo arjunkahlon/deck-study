@@ -7,7 +7,7 @@ class AuthPage extends React.Component {
 
   render() {
 
-    const { user, route } = this.context;
+    const { user, route, handleSignIn } = this.context;
 
     if (user) return <Redirect to="" />;
 
@@ -42,7 +42,8 @@ class AuthPage extends React.Component {
             <div className='col mb-5'>
               <AuthForm
                 key={route.path}
-                action={route.path}/>
+                action={route.path}
+                onSignIn={handleSignIn}/>
             </div>
           </div>
         </div>

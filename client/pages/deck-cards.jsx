@@ -44,7 +44,15 @@ class DeckCards extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/decks/${this.props.deckId}?sortBy=createdAt`)
+    const req = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': `${this.props.token}`
+      }
+    };
+
+    fetch(`/api/decks/${this.props.deckId}?sortBy=createdAt`, req)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -66,6 +74,7 @@ class DeckCards extends React.Component {
     }
     const { route } = this.context;
     const deckLength = this.state.deck.cards.length;
+    const { token } = this.props;
 
     return (
       <div className='container'>
@@ -93,6 +102,7 @@ class DeckCards extends React.Component {
                             deck={this.state.deck}
                             cardIndex = {this.props.cardIndex}
                             route = {route}
+                            token = {token}
                             deckLength={deckLength}
                             updateCards = {this.updateCards}
                             handleAddCard = {this.handleAddCard}

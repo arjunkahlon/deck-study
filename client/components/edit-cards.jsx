@@ -54,7 +54,8 @@ class EditCards extends React.Component {
       const req = {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-Access-Token': `${this.props.token}`
         },
         body: JSON.stringify(reqBody)
       };
@@ -77,10 +78,12 @@ class EditCards extends React.Component {
       reqBody.deckId = this.props.deckId;
       reqBody.question = question;
       reqBody.answer = answer;
+
       const req = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-Access-Token': `${this.props.token}`
         },
         body: JSON.stringify(reqBody)
       };

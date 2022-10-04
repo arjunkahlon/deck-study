@@ -3,6 +3,7 @@ import DeckList from '../components/deck-list';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
+import AppContext from '../lib/app-context';
 
 class Decks extends React.Component {
   constructor(props) {
@@ -20,7 +21,15 @@ class Decks extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/decks')
+    const req = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': `${this.props.token}`
+      }
+    };
+
+    fetch('/api/decks', req)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -48,7 +57,8 @@ class Decks extends React.Component {
       const req = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-Access-Token': `${this.props.token}`
         },
         body: JSON.stringify(reqBody)
       };
@@ -144,3 +154,5 @@ class Decks extends React.Component {
 }
 
 export default Decks;
+
+Decks.contextType = AppContext;

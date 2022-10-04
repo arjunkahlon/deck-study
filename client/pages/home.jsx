@@ -11,7 +11,7 @@ function Home(props) {
   }
   return (
     <div className='m-1'>
-      <Decks />
+      <Decks token={props.token}/>
     </div>
   );
 }
