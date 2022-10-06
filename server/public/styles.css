@@ -1,6 +1,6 @@
 body {
   padding: 0;
-  background-color: #e0e0e0;
+  background: linear-gradient(to top, rgba(255, 192, 203, 0.225), rgba(116, 49, 249, 0.193)) !important;
 }
 
 .tab-anchor {
@@ -10,10 +10,6 @@ body {
 
 a:link {
   text-decoration: none;
-}
-
-.background-grey {
-  background-color: #e0e0e0;
 }
 
 .study-header {
@@ -30,12 +26,6 @@ a:link {
 }
 
 /* Hover/Focus Pseudoclasses */
-
-textarea:focus {
-  outline: none !important;
-  border-color: rgb(116, 49, 249);
-  box-shadow: 0 0 5px 2px rgba(116, 49, 249, 0.39);
-}
 
 .rtng-circle {
   transition: transform 0.5s ease;

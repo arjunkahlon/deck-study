@@ -177,7 +177,7 @@ class EditCards extends React.Component {
           <div className='col'>
             <div className='overflow-auto shadow-lg'>
               <Card className>
-                <Card.Header className='bg-primary text-light text-center font-open-sans h5 p-3'>
+                <Card.Header className='bg-primary-gradient-bottom text-light text-center font-open-sans h5 p-3'>
                   Edit Card {this.props.cardIndex + 1} of {this.props.deckLength}
                 </Card.Header>
                 <Card.Body className=''>

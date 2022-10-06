@@ -2,6 +2,18 @@
   background-color: rgb(116, 49, 249) !important;
 }
 
+.bg-primary-gradient-left {
+  background: linear-gradient(to left, rgb(116, 49, 249), rgba(255, 0, 238, 0.24)) !important;
+}
+
+.bg-primary-gradient-right {
+  background: linear-gradient(to right, rgb(116, 49, 249), rgba(255, 0, 238, 0.24)) !important;
+}
+
+.bg-primary-gradient-bottom {
+  background: linear-gradient(to bottom, rgb(116, 49, 249), rgba(255, 0, 238, 0.24)) !important;
+}
+
 .bg-blue {
   background-color: rgba(0, 0, 255, 0.85) !important;
 }
@@ -35,8 +47,35 @@
   transition: all 700ms ease;
 }
 
+.deck-name:hover {
+  color: rgb(255, 26, 217) !important;
+  transition: all 400ms ease;
+}
+
+.deck-icon {
+  font-size: 1.5rem !important;
+}
+
+.deck-icon:hover {
+  color: rgb(255, 26, 217) !important;
+  transition: all 400ms ease;
+  box-shadow: 0 0 5px 2px rgb(116, 49, 249);
+  border-radius: 10%;
+  background-color: rgba(116, 49, 249, 0.093);
+}
+
+textarea:focus {
+  outline: none !important;
+  border-color: rgb(116, 49, 249);
+  box-shadow: 0 0 5px 2px rgba(116, 49, 249, 0.39);
+}
+
 .border-primary {
   border-color: rgb(116, 49, 249) !important;
+}
+
+.border-primary-gradient {
+  border-bottom: 1px solid red !important;
 }
 
 .nav-tabs .nav-link {
