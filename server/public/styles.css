@@ -3,6 +3,8 @@ body {
   background: linear-gradient(to top, rgba(255, 192, 203, 0.225), rgba(116, 49, 249, 0.193)) !important;
 }
 
+/* Tab Anchor Selectors */
+
 .tab-anchor {
   color: inherit;
   display: block;
@@ -11,6 +13,12 @@ body {
 a:link {
   text-decoration: none;
 }
+
+a:hover {
+  color: inherit;
+}
+
+/* Card Component Styling Selectors */
 
 .study-header {
   background-color: rgb(178, 178, 178);
@@ -25,7 +33,7 @@ a:link {
   height: 12rem;
 }
 
-/* Hover/Focus Pseudoclasses */
+/* Transitions */
 
 .rtng-circle {
   transition: transform 0.5s ease;
