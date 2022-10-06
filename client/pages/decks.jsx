@@ -86,7 +86,7 @@ class Decks extends React.Component {
       return (
         <div className='container shadow-lg mb-3'>
           <div className='row'>
-            <div className='col-12 text-white bg-primary bg-gradient decks-header mt-2 p-4 pb-2 rounded'>
+            <div className='col-12 text-white bg-primary-gradient-right decks-header mt-2 p-4 pb-2 rounded'>
               <div className='ps-2'>
                 <h2 className='font-open-sans'>Decks</h2>
               </div>

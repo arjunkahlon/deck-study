@@ -55,7 +55,7 @@ class BrowseCards extends React.Component {
           <div className='col-md-6 mx-auto'>
             <Card className='shadow-lg mb-5 bg-white rounded'
                   style={{ height: '22rem' }}>
-              <Card.Title className='bg-primary bg-gradient rounded'>
+              <Card.Title className='bg-primary-gradient-left bg-gradient rounded'>
                 <h5 className='text-secondary text-light font-open-sans p-2 h6'>
                   {cardHeader}</h5>
               </Card.Title>
