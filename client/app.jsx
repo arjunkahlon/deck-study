@@ -5,10 +5,10 @@ import DeckCards from './pages/deck-cards';
 import StudyCards from './pages/study-cards';
 import Navigation from './components/navbar';
 import PageContainer from './components/page-container';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
 import jwtDecode from 'jwt-decode';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export default class App extends React.Component {
   constructor(props) {

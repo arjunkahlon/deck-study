@@ -1,3 +1,5 @@
+/* Background Overrides */
+
 .bg-primary {
   background-color: rgb(116, 49, 249) !important;
 }
@@ -14,6 +16,8 @@
   background: linear-gradient(to bottom, rgb(116, 49, 249), rgba(255, 0, 238, 0.24)) !important;
 }
 
+/* Study Cards Color Overrides */
+
 .bg-blue {
   background-color: rgba(0, 0, 255, 0.85) !important;
 }
@@ -22,9 +26,19 @@
   background-color: rgb(255, 128, 0) !important;
 }
 
+/* Font/Text Overrides */
+
 .text-primary {
   color: rgb(116, 49, 249) !important;
 }
+
+textarea:focus {
+  outline: none !important;
+  border-color: rgb(116, 49, 249);
+  box-shadow: 0 0 5px 2px rgba(116, 49, 249, 0.39);
+}
+
+/* Button Overrides */
 
 .btn-primary {
   background-color: rgb(116, 49, 249);
@@ -47,6 +61,8 @@
   transition: all 700ms ease;
 }
 
+/* Deck Overrides */
+
 .deck-name:hover {
   color: rgb(255, 26, 217) !important;
   transition: all 400ms ease;
@@ -64,19 +80,13 @@
   background-color: rgba(116, 49, 249, 0.093);
 }
 
-textarea:focus {
-  outline: none !important;
-  border-color: rgb(116, 49, 249);
-  box-shadow: 0 0 5px 2px rgba(116, 49, 249, 0.39);
-}
+/* Border Overrides */
 
 .border-primary {
   border-color: rgb(116, 49, 249) !important;
 }
 
-.border-primary-gradient {
-  border-bottom: 1px solid red !important;
-}
+/* Tabs Overrides */
 
 .nav-tabs .nav-link {
   color: rgb(116, 49, 249) !important;
