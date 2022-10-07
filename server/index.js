@@ -32,6 +32,8 @@ app.post('/api/auth/sign-up', (req, res, next) => {
       const sql = `
           insert into "users" ("username", "hashedPassword")
           values ($1, $2)
+          on conflict("username")
+          do nothing
           returning "userId", "username", "joinedAt"
        `;
       const params = [username, hashedPassword];
@@ -39,6 +41,9 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     })
     .then(result => {
       const [user] = result.rows;
+      if (user === undefined) {
+        throw new ClientError(409, 'user already exists in database');
+      }
       res.status(201).json(user);
     })
     .catch(err => next(err));
