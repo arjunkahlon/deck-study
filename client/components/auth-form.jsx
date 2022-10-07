@@ -45,7 +45,7 @@ export default class AuthForm extends React.Component {
   handleDemo(event) {
     if (this.props.action === 'sign-in') {
       this.setState({
-        username: 'devUser',
+        username: 'demo',
         password: 'password1'
       });
     } else {
