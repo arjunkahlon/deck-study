@@ -46,16 +46,16 @@ Application is hosted on my personal domain: https://deck-study.arjunkahlon.com/
 
 ## Preview
 #### User can create a deck
-![create-deck](../deck-study/readme-gifs/create-deck.gif)
+![create-deck](https://github.com/arjunkahlon/deck-study/blob/main/readme-gifs/create-deck.gif)
 
 #### User can add a card
-![add-card](../deck-study/readme-gifs/add-card.gif)
+![add-card](https://github.com/arjunkahlon/deck-study/blob/main/readme-gifs/add-card.gif)
 
 #### User can edit a card
-![edit-card](../deck-study/readme-gifs/edit-card.gif)
+![edit-card](https://github.com/arjunkahlon/deck-study/blob/main/readme-gifs/edit-card.gif)
 
 #### User can study a deck and rate card difficulty
-![study-deck](../deck-study/readme-gifs/study-deck.gif)
+![study-deck](https://github.com/arjunkahlon/deck-study/blob/main/readme-gifs/study-deck.gif)
 
 ## Getting Started
 
