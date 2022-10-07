@@ -23,7 +23,7 @@ class AuthPage extends React.Component {
       <div className='container'>
         <div className='row'>
           <div className='col'>
-            <header className='text-center bg-primary bg-gradient p-3 rounded'>
+            <header className='text-center bg-primary-gradient-right p-3 rounded'>
               <h2 className='text-light font-open-sans'>
                 {userHeader}
               </h2>

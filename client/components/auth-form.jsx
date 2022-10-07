@@ -9,6 +9,7 @@ export default class AuthForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemo = this.handleDemo.bind(this);
   }
 
   handleChange(event) {
@@ -34,7 +35,22 @@ export default class AuthForm extends React.Component {
         } else if (result.user && result.token) {
           this.props.onSignIn(result);
         }
+      })
+      .catch(err => {
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
       });
+  }
+
+  handleDemo(event) {
+    if (this.props.action === 'sign-in') {
+      this.setState({
+        username: 'devUser',
+        password: 'password1'
+      });
+    } else {
+      window.location.hash = 'sign-in';
+    }
   }
 
   render() {
@@ -53,6 +69,10 @@ export default class AuthForm extends React.Component {
       ? 'Sign Up'
       : 'Sign In';
 
+    const demoText = action === 'sign-up'
+      ? 'Sign In With Demo Account Instead'
+      : 'Demo Account';
+
     return (
       <div className='container'>
         <div className='row justify-content-center'>
@@ -68,6 +88,7 @@ export default class AuthForm extends React.Component {
                   id="username"
                   type="text"
                   name="username"
+                  value={this.state.username}
                   onChange={handleChange}
                   className="form-control bg-light" />
               </div>
@@ -80,6 +101,7 @@ export default class AuthForm extends React.Component {
                   id="password"
                   type="password"
                   name="password"
+                  value={this.state.password}
                   onChange={handleChange}
                   className="form-control bg-light" />
               </div>
@@ -94,6 +116,12 @@ export default class AuthForm extends React.Component {
                 </button>
               </div>
             </form>
+            <div className='text-center mt-4'>
+              <button className="btn btn-outline-secondary"
+                      onClick={this.handleDemo}>
+                {demoText}
+              </button>
+            </div>
           </div>
         </div>
       </div>

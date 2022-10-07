@@ -8,6 +8,7 @@ import PageContainer from './components/page-container';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
 import jwtDecode from 'jwt-decode';
+import NetworkError from './components/network-error';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export default class App extends React.Component {
@@ -17,10 +18,12 @@ export default class App extends React.Component {
       user: null,
       token: 'undefined',
       isAuthorizing: true,
+      networkError: null,
       route: parseRoute(window.location.hash)
     };
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.handleNetworkError = this.handleNetworkError.bind(this);
   }
 
   componentDidMount() {
@@ -46,8 +49,18 @@ export default class App extends React.Component {
     this.setState({ user: null, token: null });
   }
 
+  handleNetworkError(error) {
+    this.setState({
+      networkError: error.message
+    });
+  }
+
   renderPage() {
     const { user, token, route } = this.state;
+
+    if (this.state.networkError) {
+      return <NetworkError message={this.state.networkError}/>;
+    }
 
     if (route.path === '') {
       return <Home user={user} token={token}/>;
@@ -74,8 +87,8 @@ export default class App extends React.Component {
   render() {
     if (this.state.isAuthorizing) return null;
     const { user, route } = this.state;
-    const { handleSignIn } = this;
-    const contextValue = { user, route, handleSignIn };
+    const { handleSignIn, handleNetworkError } = this;
+    const contextValue = { user, route, handleSignIn, handleNetworkError };
     return (
       <AppContext.Provider value={contextValue}>
         <>

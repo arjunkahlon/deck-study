@@ -61,7 +61,8 @@ class DeckCards extends React.Component {
         });
       })
       .catch(err => {
-        console.error(err);
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
       });
   }
 

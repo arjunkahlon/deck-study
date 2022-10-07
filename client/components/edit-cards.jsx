@@ -67,6 +67,10 @@ class EditCards extends React.Component {
           this.setState({
             isUpdating: false
           });
+        })
+        .catch(err => {
+          const { handleNetworkError } = this.context;
+          handleNetworkError(err);
         });
     }
   }
@@ -95,7 +99,11 @@ class EditCards extends React.Component {
         })
         .then(
           this.toggleAddMode
-        );
+        )
+        .catch(err => {
+          const { handleNetworkError } = this.context;
+          handleNetworkError(err);
+        });
     }
   }
 
@@ -160,7 +168,7 @@ class EditCards extends React.Component {
             </a>
           </div>
           <div className='col-6'>
-            <div className='d-grid gap-z mt-4'>
+            <div className='d-grid gap-z mt-4 mb-1'>
               <Button variant='outline-secondary'
                       size='lg'
                       className='font-open-sans'
@@ -211,9 +219,6 @@ class EditCards extends React.Component {
                           </div>
                           <div className='row'>
                             <div className='col text-end mt-5'>
-                              <Button variant='danger'
-                                className='m-2'>Delete
-                              </Button>
                               <Button variant='primary'
                                 type="submit"
                                 value="Submit"
