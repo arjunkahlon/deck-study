@@ -1,3 +1,3 @@
-# final-project
+# deck-study
 
-A full stack JavaScript solo project.
+A full-stack project that allows uers to create and study flash cards.
