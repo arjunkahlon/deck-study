@@ -74,6 +74,10 @@ class StudyCards extends React.Component {
               cardRevealed: false
             });
           }
+        })
+        .catch(err => {
+          const { handleNetworkError } = this.context;
+          handleNetworkError(err);
         });
     }
   }
@@ -99,7 +103,8 @@ class StudyCards extends React.Component {
         });
       })
       .catch(err => {
-        console.error(err);
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
       });
   }
 

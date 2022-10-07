@@ -13,7 +13,7 @@
 }
 
 .bg-primary-gradient-bottom {
-  background: linear-gradient(to bottom, rgb(116, 49, 249), rgba(255, 0, 238, 0.24)) !important;
+  background: linear-gradient(to top, rgba(116, 49, 249, 0.734), rgba(255, 0, 238, 0.157)) !important;
 }
 
 /* Study Cards Color Overrides */
@@ -62,6 +62,14 @@ textarea:focus {
 }
 
 /* Deck Overrides */
+
+.deck-entry {
+  transition: transform 0.5s ease !important;
+}
+
+.deck-entry:hover {
+  background: linear-gradient(to top, rgba(255, 192, 203, 0.112), rgba(116, 49, 249, 0.104)) !important;
+}
 
 .deck-name:hover {
   color: rgb(255, 26, 217) !important;

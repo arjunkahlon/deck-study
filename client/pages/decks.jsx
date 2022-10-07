@@ -36,6 +36,10 @@ class Decks extends React.Component {
           decks: data,
           isLoading: false
         });
+      })
+      .catch(err => {
+        const { handleNetworkError } = this.context;
+        handleNetworkError(err);
       });
   }
 
@@ -85,8 +89,8 @@ class Decks extends React.Component {
     if (!this.state.isLoading) {
       return (
         <div className='container shadow-lg mb-3'>
-          <div className='row'>
-            <div className='col-12 text-white bg-primary-gradient-right decks-header mt-2 p-4 pb-2 rounded'>
+          <div className='row bg-primary-gradient-right rounded'>
+            <div className='col-12 text-white decks-header mt-2 p-4 pb-2 rounded'>
               <div className='ps-2'>
                 <h2 className='font-open-sans'>Decks</h2>
               </div>

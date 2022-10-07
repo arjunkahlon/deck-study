@@ -11,9 +11,13 @@ class Welcome extends React.Component {
   render() {
     return (
       <div className='container'>
-        <div className='row justify-content-center'>
-          <div className='col-6'>
-            <h2>Placeholder for Welcome Screen</h2>
+        <div className='row'>
+          <div className='col'>
+            <div className='text-center'>
+              <h4 className='text-primary'>Welcome to Deck Study</h4>
+              <p className='text-primary'>Landing Page Still in Development. Please Sign In or Sign Up to get started.</p>
+              <img src="https://cdn.iconscout.com/icon/free/png-256/maintenance-services-wrench-setting-support-tools-25-8246.png" alt="" />
+            </div>
           </div>
         </div>
       </div>
