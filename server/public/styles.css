@@ -71,3 +71,8 @@ a:hover {
   font-weight: bolder;
   font-style: italic;
 }
+
+.landing-hero-container {
+  background-image: url("https://deck-study.arjunkahlon.com/images/welcome-bg.png");
+  min-height: 15rem;
+}
