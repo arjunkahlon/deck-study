@@ -5,7 +5,7 @@ function Welcome(props) {
 
   return (
     <div>
-      <div className='container landing-hero-container border border-primary p-5'>
+      <div className='container landing-hero-container border border-primary p-5 shadow-lg'>
         <div className='row'>
           <div className='col pt-2'>
             <h1 className='text-light text-center font-open-sans'>Create, Study, Learn</h1>
@@ -30,14 +30,14 @@ function Welcome(props) {
           </div>
         </div>
       </div>
-      <div className='container landing-body-container bg-dark bg-gradient'>
+      <div className='container landing-body-container bg-dark bg-gradient shadow-lg'>
         <p className='text-white text-end'>Deck Study</p>
       </div>
       <div className='container bg-primary-gradient border border-primary rounded mb-2 p-0'>
         <div className='text-center'>
           <h2 className='font-open-sans bg-dark bg-gradient p-2 text-white m-0'>Why Deck Study?</h2>
         </div>
-        <div className='container bg-primary-gradient-left'>
+        <div className='container bg-primary-gradient-left p-4 shadow-lg'>
           <div className='row'>
             <div className='col-lg-6 p-2'>
               <div className='text-center'>
@@ -62,6 +62,17 @@ function Welcome(props) {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className='container bg-dark bg-gradient p-3 mb-1 shadow-lg'>
+        <div className='row'>
+          <div className='col-sm-12 text-end'>
+            <p className='text-white'>Arjun Kahlon</p>
+            <a className='text-white' target="_blank" rel="noopener noreferrer" href="https://github.com/arjunkahlon/deck-study">
+              https://github.com/arjunkahlon/deck-study
+            </a>
+
           </div>
         </div>
       </div>
