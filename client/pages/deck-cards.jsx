@@ -25,6 +25,7 @@ class DeckCards extends React.Component {
     this.setState({
       deck: deckCopy
     });
+    window.location.hash = `#${this.context.route.path}?deckId=${this.props.deckId}&tab=edit&cardIndex=${this.state.deck.cards.length}`;
   }
 
   handleEditCard(card) {

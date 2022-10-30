@@ -117,7 +117,7 @@ class EditCards extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.cardIndex !== prevProps.cardIndex) {
+    if (this.props.cardIndex !== prevProps.cardIndex || this.props.deckLength !== prevProps.deckLength) {
       this.setState({
         question: this.props.deck.cards[this.props.cardIndex].question,
         answer: this.props.deck.cards[this.props.cardIndex].answer
