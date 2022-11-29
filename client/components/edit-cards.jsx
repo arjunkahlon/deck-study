@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import Modal from 'react-bootstrap/Modal';
 import AddCard from './add-card';
 import Button from 'react-bootstrap/Button';
 import EmptyPrompt from './empty-prompt';
@@ -10,6 +11,7 @@ class EditCards extends React.Component {
     this.state = ({
       addMode: false,
       isUpdating: false,
+      deleteModalOpen: false,
       question: '',
       answer: ''
     });
@@ -219,6 +221,7 @@ class EditCards extends React.Component {
                           </div>
                           <div className='row'>
                             <div className='col text-end mt-5'>
+                              <Button variant='danger'>Delete</Button>
                               <Button variant='primary'
                                 type="submit"
                                 value="Submit"
@@ -252,6 +255,39 @@ class EditCards extends React.Component {
             </div>
           </div>
         </div>
+        <Modal show={this.state.deleteModalOpen}
+          dialogClassName='custom-dialog'
+          onHide={this.closeModal}>
+          <Modal.Header className='pb-1 bg-gradient bg-danger bg-danger rounded'>
+            <Modal.Title className='text-center w-100'>
+              <div>
+                <h2 className='text-light font-open-sans font-open-sans'>
+                  Delete Card</h2>
+              </div>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={this.handleSubmit}>
+              <div className='text-center'>
+                <div>
+                  <h4>Are you sure you want to delete this card?</h4>
+                </div>
+                <div className='d-grid gap-2 m-4'>
+                  <Button variant='danger'
+                    className='bg-danger'
+                    size='lg'
+                    onClick={this.closeModal}>Delete Card</Button>
+                </div>
+                <div className='d-grid gap-2 m-4'>
+                  <Button variant='secondary'
+                    className='bg-secondary'
+                    size='lg'
+                    onClick={this.closeModal}>Cancel</Button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
