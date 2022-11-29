@@ -260,6 +260,15 @@ app.patch('/api/card/difficulty/:cardId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/card/:cardId', (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+
+  if (!cardId) {
+    throw new ClientError('400', 'cardId is required');
+  }
+
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
