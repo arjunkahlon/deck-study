@@ -271,6 +271,21 @@ app.delete('/api/card/:cardId', (req, res, next) => {
     throw new ClientError(400, 'Invalid cardId. cardId must be a non-negative integer.');
   }
 
+  const sql = `
+              delete from "cards"
+                where "cardId" = $1
+              returning *
+              `;
+  const params = [cardId];
+  db.query(sql, params).then(result => {
+    const [deletedCard] = result.rows;
+    if (!deletedCard) {
+      throw new ClientError(404, 'cardId does not exist in database');
+    } else {
+      return res.json(deletedCard);
+    }
+  })
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
