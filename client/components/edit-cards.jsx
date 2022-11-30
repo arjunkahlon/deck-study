@@ -17,9 +17,11 @@ class EditCards extends React.Component {
     });
     this.handleEditCard = this.handleEditCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
+    this.handleDeleteCard = this.handleDeleteCard(this);
     this.toggleAddMode = this.toggleAddMode.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
     this.handleQuestionChange = this.handleQuestionChange.bind(this);
+    this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
   }
 
   handleQuestionChange(event) {
@@ -38,6 +40,12 @@ class EditCards extends React.Component {
   toggleAddMode(question, answer) {
     this.setState({
       addMode: !this.state.addMode
+    });
+  }
+
+  toggleDeleteModal() {
+    this.setState({
+      deleteModalOpen: !this.state.deleteModalOpen
     });
   }
 
@@ -107,6 +115,10 @@ class EditCards extends React.Component {
           handleNetworkError(err);
         });
     }
+  }
+
+  handleDeleteCard() {
+
   }
 
   componentDidMount() {
@@ -221,7 +233,8 @@ class EditCards extends React.Component {
                           </div>
                           <div className='row'>
                             <div className='col text-end mt-5'>
-                              <Button variant='danger'>Delete</Button>
+                              <Button variant='danger'
+                                onClick={this.toggleDeleteModal}>Delete</Button>
                               <Button variant='primary'
                                 type="submit"
                                 value="Submit"
@@ -257,7 +270,7 @@ class EditCards extends React.Component {
         </div>
         <Modal show={this.state.deleteModalOpen}
           dialogClassName='custom-dialog'
-          onHide={this.closeModal}>
+          onHide={this.toggleDeleteModal}>
           <Modal.Header className='pb-1 bg-gradient bg-danger bg-danger rounded'>
             <Modal.Title className='text-center w-100'>
               <div>
@@ -282,7 +295,7 @@ class EditCards extends React.Component {
                   <Button variant='secondary'
                     className='bg-secondary'
                     size='lg'
-                    onClick={this.closeModal}>Cancel</Button>
+                    onClick={this.toggleDeleteModal}>Cancel</Button>
                 </div>
               </div>
             </form>
