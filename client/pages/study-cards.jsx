@@ -133,7 +133,7 @@ class StudyCards extends React.Component {
                   </div>
                 </div>
               </Card.Header>
-              <Card.Body>
+              <Card.Body className='overflow-auto'>
                 {
                   this.state.cardRevealed
                     ? (
