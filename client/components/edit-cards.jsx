@@ -17,7 +17,7 @@ class EditCards extends React.Component {
     });
     this.handleEditCard = this.handleEditCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
-    this.handleDeleteCard = this.handleDeleteCard(this);
+    this.handleDeleteCard = this.handleDeleteCard.bind(this);
     this.toggleAddMode = this.toggleAddMode.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
     this.handleQuestionChange = this.handleQuestionChange.bind(this);
@@ -117,7 +117,29 @@ class EditCards extends React.Component {
     }
   }
 
-  handleDeleteCard() {
+  handleDeleteCard(event) {
+    this.setState({
+      isUpdating: true,
+      deleteModalOpen: false
+    });
+
+    const cardId = this.props.deck.cards[this.props.cardIndex].cardId;
+    const req = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': `${this.props.token}`
+      }
+    };
+
+    fetch(`/api/card/${cardId}`, req)
+      .then(res => res.json())
+      .then(result => {
+        this.props.handleDeleteCard(result);
+        this.setState({
+          isUpdating: false
+        });
+      });
 
   }
 
@@ -132,10 +154,12 @@ class EditCards extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.cardIndex !== prevProps.cardIndex || this.props.deckLength !== prevProps.deckLength) {
-      this.setState({
-        question: this.props.deck.cards[this.props.cardIndex].question,
-        answer: this.props.deck.cards[this.props.cardIndex].answer
-      });
+      if (this.props.deckLength !== 0) {
+        this.setState({
+          question: this.props.deck.cards[this.props.cardIndex].question,
+          answer: this.props.deck.cards[this.props.cardIndex].answer
+        });
+      }
     }
   }
 
@@ -289,7 +313,7 @@ class EditCards extends React.Component {
                   <Button variant='danger'
                     className='bg-danger'
                     size='lg'
-                    onClick={this.closeModal}>Delete Card</Button>
+                    onClick={this.handleDeleteCard}>Delete Card</Button>
                 </div>
                 <div className='d-grid gap-2 m-4'>
                   <Button variant='secondary'
