@@ -59,7 +59,7 @@ class BrowseCards extends React.Component {
                 <h5 className='text-secondary text-light font-open-sans p-2 h6'>
                   {cardHeader}</h5>
               </Card.Title>
-              <Card.Body onClick={this.flipCard}>
+              <Card.Body className='overflow-auto' onClick={this.flipCard}>
                 <div className='mt-5'>
                   <p className='text-center font-open-sans pt-3'>
                     {

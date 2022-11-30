@@ -192,7 +192,7 @@ app.put('/api/card/:cardId', (req, res, next) => {
   }
 
   if (!Number.isInteger(cardId) || cardId < 0) {
-    throw new ClientError(400, 'gradeId must be a postive Integer');
+    throw new ClientError(400, 'Invalid cardId. cardId must be a non-negative integer.');
   }
 
   const { question, answer } = req.body;
@@ -230,7 +230,7 @@ app.patch('/api/card/difficulty/:cardId', (req, res, next) => {
   }
 
   if (!Number.isInteger(cardId) || cardId < 0) {
-    throw new ClientError(400, 'gradeId must be a postive Integer');
+    throw new ClientError(400, 'Invalid cardId. cardId must be a non-negative integer.');
   }
 
   const { difficulty } = req.body;
@@ -257,6 +257,34 @@ app.patch('/api/card/difficulty/:cardId', (req, res, next) => {
         return res.json(updatedCard);
       }
     })
+    .catch(err => next(err));
+});
+
+app.delete('/api/card/:cardId', (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+
+  if (!cardId) {
+    throw new ClientError(400, 'cardId is required');
+  }
+
+  if (!Number.isInteger(cardId) || cardId < 0) {
+    throw new ClientError(400, 'Invalid cardId. cardId must be a non-negative integer.');
+  }
+
+  const sql = `
+              delete from "cards"
+                where "cardId" = $1
+              returning *
+              `;
+  const params = [cardId];
+  db.query(sql, params).then(result => {
+    const [deletedCard] = result.rows;
+    if (!deletedCard) {
+      throw new ClientError(404, 'cardId does not exist in database');
+    } else {
+      return res.json(deletedCard);
+    }
+  })
     .catch(err => next(err));
 });
 

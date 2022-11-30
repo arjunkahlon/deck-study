@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import Modal from 'react-bootstrap/Modal';
 import AddCard from './add-card';
 import Button from 'react-bootstrap/Button';
 import EmptyPrompt from './empty-prompt';
@@ -10,14 +11,17 @@ class EditCards extends React.Component {
     this.state = ({
       addMode: false,
       isUpdating: false,
+      deleteModalOpen: false,
       question: '',
       answer: ''
     });
     this.handleEditCard = this.handleEditCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
+    this.handleDeleteCard = this.handleDeleteCard.bind(this);
     this.toggleAddMode = this.toggleAddMode.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
     this.handleQuestionChange = this.handleQuestionChange.bind(this);
+    this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
   }
 
   handleQuestionChange(event) {
@@ -36,6 +40,12 @@ class EditCards extends React.Component {
   toggleAddMode(question, answer) {
     this.setState({
       addMode: !this.state.addMode
+    });
+  }
+
+  toggleDeleteModal() {
+    this.setState({
+      deleteModalOpen: !this.state.deleteModalOpen
     });
   }
 
@@ -107,6 +117,32 @@ class EditCards extends React.Component {
     }
   }
 
+  handleDeleteCard(event) {
+    this.setState({
+      isUpdating: true,
+      deleteModalOpen: false
+    });
+
+    const cardId = this.props.deck.cards[this.props.cardIndex].cardId;
+    const req = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': `${this.props.token}`
+      }
+    };
+
+    fetch(`/api/card/${cardId}`, req)
+      .then(res => res.json())
+      .then(result => {
+        this.props.handleDeleteCard(result);
+        this.setState({
+          isUpdating: false
+        });
+      });
+
+  }
+
   componentDidMount() {
     if (this.props.deckLength > 0) {
       this.setState({
@@ -118,10 +154,12 @@ class EditCards extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.cardIndex !== prevProps.cardIndex || this.props.deckLength !== prevProps.deckLength) {
-      this.setState({
-        question: this.props.deck.cards[this.props.cardIndex].question,
-        answer: this.props.deck.cards[this.props.cardIndex].answer
-      });
+      if (this.props.deckLength !== 0) {
+        this.setState({
+          question: this.props.deck.cards[this.props.cardIndex].question,
+          answer: this.props.deck.cards[this.props.cardIndex].answer
+        });
+      }
     }
   }
 
@@ -219,6 +257,8 @@ class EditCards extends React.Component {
                           </div>
                           <div className='row'>
                             <div className='col text-end mt-5'>
+                              <Button variant='danger'
+                                onClick={this.toggleDeleteModal}>Delete</Button>
                               <Button variant='primary'
                                 type="submit"
                                 value="Submit"
@@ -252,6 +292,39 @@ class EditCards extends React.Component {
             </div>
           </div>
         </div>
+        <Modal show={this.state.deleteModalOpen}
+          dialogClassName='custom-dialog'
+          onHide={this.toggleDeleteModal}>
+          <Modal.Header className='pb-1 bg-gradient bg-danger bg-danger rounded'>
+            <Modal.Title className='text-center w-100'>
+              <div>
+                <h2 className='text-light font-open-sans font-open-sans'>
+                  Delete Card</h2>
+              </div>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={this.handleSubmit}>
+              <div className='text-center'>
+                <div>
+                  <h4>Are you sure you want to delete this card?</h4>
+                </div>
+                <div className='d-grid gap-2 m-4'>
+                  <Button variant='danger'
+                    className='bg-danger'
+                    size='lg'
+                    onClick={this.handleDeleteCard}>Delete Card</Button>
+                </div>
+                <div className='d-grid gap-2 m-4'>
+                  <Button variant='secondary'
+                    className='bg-secondary'
+                    size='lg'
+                    onClick={this.toggleDeleteModal}>Cancel</Button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }

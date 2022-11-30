@@ -17,6 +17,7 @@ class DeckCards extends React.Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
     this.handleEditCard = this.handleEditCard.bind(this);
+    this.handleDeleteCard = this.handleDeleteCard.bind(this);
   }
 
   handleAddCard(card) {
@@ -33,6 +34,19 @@ class DeckCards extends React.Component {
     const cardsCopy = this.state.deck.cards.slice();
     cardsCopy[this.props.cardIndex] = card;
     deckCopy.cards = cardsCopy;
+    this.setState({
+      deck: deckCopy
+    });
+  }
+
+  handleDeleteCard(card) {
+    const deckCopy = Object.assign({}, this.state.deck);
+    deckCopy.cards.splice(this.props.cardIndex, 1);
+    if (this.props.cardIndex === this.state.deck.cards.length) {
+      if (this.props.cardIndex !== 0) {
+        window.location.hash = `#${this.context.route.path}?deckId=${this.props.deckId}&tab=edit&cardIndex=${this.props.cardIndex - 1}`;
+      }
+    }
     this.setState({
       deck: deckCopy
     });
@@ -108,7 +122,8 @@ class DeckCards extends React.Component {
                             deckLength={deckLength}
                             updateCards = {this.updateCards}
                             handleAddCard = {this.handleAddCard}
-                            handleEditCard = {this.handleEditCard}/>
+                            handleEditCard = {this.handleEditCard}
+                            handleDeleteCard = {this.handleDeleteCard}/>
               </Tab>
               <Tab eventKey="preview"
                 title={<a href={`#${route.path}?deckId=${this.props.deckId}&tab=preview&cardIndex=${this.props.cardIndex}`}
