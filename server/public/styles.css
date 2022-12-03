@@ -42,6 +42,15 @@ a:hover {
   height: 12rem;
 }
 
+#question-input,
+#answer-input {
+  white-space: pre-wrap;
+}
+
+.preserve-white-space {
+  white-space: pre-wrap;
+}
+
 /* Transitions */
 
 .rtng-circle {
