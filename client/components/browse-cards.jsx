@@ -60,18 +60,20 @@ class BrowseCards extends React.Component {
                   {cardHeader}</h5>
               </Card.Title>
               <Card.Body className='overflow-auto' onClick={this.flipCard}>
-                <div className='mt-5'>
-                  <p className='text-center font-open-sans pt-3'>
-                    {
-                      this.state.question
-                        ? (
-                            deck.cards[this.props.cardIndex].question
-                          )
-                        : (
-                            deck.cards[this.props.cardIndex].answer
-                          )
-                    }
-                  </p>
+                <div className='mt-5 preserve-white-space'>
+                  <div className='text-center'>
+                    <p className='font-open-sans pt-3 d-inline-block text-start'>
+                      {
+                        this.state.question
+                          ? (
+                              deck.cards[this.props.cardIndex].question
+                            )
+                          : (
+                              deck.cards[this.props.cardIndex].answer
+                            )
+                      }
+                    </p>
+                  </div>
                 </div>
               </Card.Body>
               <Card.Footer>
