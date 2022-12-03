@@ -24,13 +24,13 @@ class PreviewCards extends React.Component {
               <div className='row'>
                 <div className='col-md-6'>
                   <h6 className='text-secondary'>Question:</h6>
-                  <div className='mb-5'>
+                  <div className='mb-5 preserve-white-space'>
                     <p className='font-open-sans'>{card.question}</p>
                   </div>
                 </div>
                 <div className='col-md-6'>
                   <h6 className='text-secondary'>Answer:</h6>
-                  <div className=''>
+                  <div className='preserve-white-space'>
                     <p className='font-open-sans'>{card.answer}</p>
                   </div>
                 </div>
