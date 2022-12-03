@@ -144,7 +144,7 @@ class StudyCards extends React.Component {
                             </div>
                           </div>
                           <div className='row'>
-                            <div className='col text-center'>
+                          <div className='col text-center preserve-white-space'>
                               <p className='font-open-sanstext-secondary mt-3'>{this.state.cards[this.state.index].question}</p>
                             </div>
                           </div>
@@ -159,7 +159,7 @@ class StudyCards extends React.Component {
                             </div>
                           </div>
                           <div className='row'>
-                            <div className='col text-center'>
+                          <div className='col text-center preserve-white-space'>
                             <p className='font-open-sans font-weight-bold'>{this.state.cards[this.state.index].answer}</p>
                             </div>
                           </div>
@@ -173,7 +173,7 @@ class StudyCards extends React.Component {
                             </div>
                           </div>
                           <div className='text-center mt-5'>
-                            <div className='pt-5'>
+                          <div className='pt-5 preserve-white-space'>
                             <p className='font-open-sans'>{this.state.cards[this.state.index].question}</p>
                             </div>
                           </div>
